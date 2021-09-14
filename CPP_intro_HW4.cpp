@@ -73,7 +73,7 @@ int main() {
         cin >> num4;
     // 1st algorithm (first idea):
     if (num4 > 0) {
-        for (int i = 2; num4-1; i++) {
+        for (int i = 1; num4-1; i+2) {
             if (num4 % i == 0) {
                 cout << "this is not a simple number!" << endl;
                 break;
@@ -90,7 +90,7 @@ int main() {
 
     // 2nd algorithm:
     {
-        for (int i = 2; i <= sqrt(num4); i++) {
+        for (int i = 1; i <= sqrt(num4); i+2) {
             if (num4 % i == 0) {
                 cout << "this is not a simple number!" << endl;
                 break;
