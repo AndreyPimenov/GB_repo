@@ -81,7 +81,7 @@ int* arr_t2_ptr = &arr_t2[0];
 const int arr_t4_size = 10;
 
 // for task 5:
-const int arr_t5_size = 7;
+const int arr_t5_size = 5;
 
 // Block of functions:
 bool print_array_direct(double arr_fun[], const int arr_size) {
@@ -274,39 +274,32 @@ bool check_balance(double arr[]) {
 
     // step 2. Look which area is bigger (L = left) or (R = right)
     double L_sum, R_sum;
-    L_sum = arr_interval_sum(arr, 0, element_of_boarder - 1);
-    R_sum = arr_interval_sum(arr, element_of_boarder, arr_t5_size - 1);
-    cout << "L = " << L_sum << ' ' << "R = " << R_sum << endl;
-
-    // step 3. Check 
-    // this variable is a flag that is responible for checking the changing of direction of movement balance boarder inside the array
-    bool change_dir_flg = false;
-    
+    bool L_flg = false, R_flg = false;   
+   
+    // step 3. Check
     do {
+        L_sum = arr_interval_sum(arr, 0, element_of_boarder - 1);
+        R_sum = arr_interval_sum(arr, element_of_boarder, arr_t5_size - 1);
+        //cout << "L_sum = " << L_sum << ' ' << "R_sum = " << R_sum << endl;
+        //cout << "L_flg = " << L_flg << ' ' << "R_flg = " << R_flg << endl;
+
+        if (L_sum == R_sum) {
+            cout << endl << "<--- TRUE";
+            return true;
+        }
+            
         if (L_sum < R_sum) {
-            
+            //cout << endl << "L -->" << " element_of_boarder = " << element_of_boarder << endl;
+            L_flg = true;
             element_of_boarder = element_of_boarder + 1;
-            L_sum = arr_interval_sum(arr, 0, element_of_boarder - 1);
-            R_sum = arr_interval_sum(arr, element_of_boarder, arr_t5_size - 1);
-            cout << "L = " << L_sum << ' ' << "R = " << R_sum << endl;
-            }
-        else if (L_sum > R_sum)
-        {
-            
+        }
+        if (L_sum > R_sum){
+            //cout << endl << "R -->" << " element_of_boarder = " << element_of_boarder << endl;
+            R_flg = true;
             element_of_boarder = element_of_boarder - 1;
-            L_sum = arr_interval_sum(arr, 0, element_of_boarder - 1);
-            R_sum = arr_interval_sum(arr, element_of_boarder, arr_t5_size - 1);
-            cout << "L = " << L_sum << ' ' << "R = " << R_sum << endl;
         }  
-       break;
-    } while ((L_sum == R_sum) || (element_of_boarder == (1 || (arr_t5_size))) || (change_dir_flg == true));
-    // Until both parts become equal OR there is no space for movement OR direction is changed
-
-    if (L_sum == R_sum) {
-        cout << "<--- TRUE" << endl;
-        return true;
-    }
-
+    } while ( ( (element_of_boarder > 0) && (element_of_boarder != arr_t5_size) ) && ((L_flg && R_flg) == false));
+    
     cout << "<--- FALSE" << endl;
     return false;
 }
@@ -357,7 +350,7 @@ int main() {
     }
 
     // task 4:
-    /*
+    
     {
         // creating array:
         double arr_t4[arr_t4_size] = {};
@@ -373,13 +366,14 @@ int main() {
         cin >> shift_n;
         array_cicle_shift(arr_t4, shift_n);
     }
-    */
+    
 
     // task 5:
     {
         // creating array:
+        //double arr_t5[arr_t5_size] = {1, 1, 1, 1, 9};
         double arr_t5[arr_t5_size] = {};
-        random_array_builder(&arr_t5[0], arr_t5_size, 1, 1);
+        random_array_builder(&arr_t5[0], arr_t5_size, 2, 42);
         cout << "this is array to balance checking: " << endl;
         print_array_by_pointer(&arr_t5[0], arr_t5_size);
 
@@ -398,4 +392,5 @@ https://habr.com/ru/post/251091/ - deeper understanding of pointers & references
 https://ravesli.com/urok-91-tsikl-foreach/ - for each cicle in C++
 https://www.geeksforgeeks.org/measure-execution-time-function-cpp/ - using chrono library
 https://www.andreyolegovich.ru/code/cpp/typeid.php - explanation how to return the type of the variable
+https://www.cplusplus.com/doc/tutorial/operators/ - operators in C++ 
 */
