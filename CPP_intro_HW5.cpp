@@ -78,7 +78,10 @@ int arr_t2[arr_t2_size] = { 1, 0, 0, 1, 1, 1, 1, 0 };
 int* arr_t2_ptr = &arr_t2[0];
 
 // for task 4:
-const int arr_t4_size = 5;
+const int arr_t4_size = 10;
+
+// for task 5:
+const int arr_t5_size = 5;
 
 // Block of functions:
 bool print_array_direct(double arr_fun [], const int arr_size) {
@@ -182,7 +185,7 @@ bool print_array_by_pointer(int* arr_ptr, const int arr_size) {
     return true;
 }
 
-// Function task3:
+// Function for task3:
 void predefine_filling_arr(int* arr_ptr, const int arr_size) {
     for (int i = 0; i < arr_size; i++) {
         *(arr_ptr + i) = 1 + 3*i;
@@ -252,6 +255,65 @@ bool array_cicle_shift(double arr[], int shift) {
     
 }
 
+// Function for task 5:
+double arr_interval_sum(double arr[], int id_first, int id_last) {
+    double sum = 0;
+
+    for (int i = id_first; i <= id_last; i++) {
+        sum = sum + arr[i];
+        //cout << "sum = " << sum << endl;
+    }
+
+    return sum;
+}
+
+
+bool check_balance(double arr[]) {
+    // step 1. Split the pop
+    int left_element = arr_t5_size / 2;
+    //cout << "left_eleemts = " << left_element << endl;
+
+    // step 2. Look which area is bigger (L = left) or (R = right)
+    double L_sum, R_sum;
+    L_sum = arr_interval_sum(arr, 0, left_element - 1);
+    R_sum = arr_interval_sum(arr, left_element, arr_t5_size - 1);
+    cout << "L_sum = " << L_sum << endl;
+    cout << "R_sum = " << R_sum << endl;
+
+    // step 3. Check them:
+    if (L_sum == R_sum) {
+        cout << "<--- TRUE" << endl;
+        return true;
+    }
+    
+    if (L_sum < R_sum) {
+        left_element = left_element + 1;
+        L_sum = arr_interval_sum(arr, 0, left_element - 1);
+        R_sum = arr_interval_sum(arr, left_element, arr_t5_size - 1);
+        cout << "L_sum = " << L_sum << endl;
+        cout << "R_sum = " << R_sum << endl;
+
+        // recursion;
+
+    }
+    
+    if (L_sum > R_sum) {
+        left_element = left_element - 1;
+        L_sum = arr_interval_sum(arr, 0, left_element - 1);
+        R_sum = arr_interval_sum(arr, left_element, arr_t5_size - 1);
+        cout << "L_sum = " << L_sum << endl;
+        cout << "R_sum = " << R_sum << endl;
+
+        // recursion;
+
+    }
+    
+    
+
+
+    return true;
+}
+
 int main() {
     // task1:  
     {
@@ -298,26 +360,34 @@ int main() {
     }
 
     // task 4:
+    /*
     {
         // creating array:
         double arr_t4[arr_t4_size] = {};
         int shift_n;
         
-        print_array_by_pointer(&arr_t4[0], arr_t4_size);
         random_array_builder(&arr_t4[0], arr_t4_size, 1, 12);
 
-        cout << "this is array to shift: ";
+        cout << "this is array to shift: " << endl;
         print_array_by_pointer(&arr_t4[0], arr_t4_size);
         
         // shifting array:
-        cout  << "Please enter how many times you want to shift the array: "; 
+        cout  << "Please enter how many times (integer number) & in which direction (depends of sign) you want to shift the array: "; 
         cin >> shift_n;
         array_cicle_shift(arr_t4, shift_n);
     }
+    */
 
     // task 5:
     {
+        // creating array:
+        double arr_t5[arr_t5_size] = {};
+        random_array_builder(&arr_t5[0], arr_t5_size, 1, 4);
+        cout << "this is array to balance checking: " << endl;
+        print_array_by_pointer(&arr_t5[0], arr_t5_size);
 
+        // Balance checking:
+        check_balance(arr_t5);
     }
 
     return 0;
