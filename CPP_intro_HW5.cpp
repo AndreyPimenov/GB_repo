@@ -55,8 +55,8 @@ int32_t getRandomNum(int32_t min, int32_t max) {
 4. * Написать функцию, которой на вход подаётся одномерный массив и число n (может быть положительным, или отрицательным), 
 при этом метод должен циклически сместить все элементы массива на n позиций.
 
-5. ** Написать функцию, которой передается не пустой одномерный целочисленный массив, она должна вернуть истину если в массиве есть место, 
-в котором сумма левой и правой части массива равны. 
+5. ** Написать функцию, которой передается не пустой одномерный целочисленный массив, 
+она должна вернуть истину если в массиве есть место, в котором сумма левой и правой части массива равны. 
 Примеры: 
 checkBalance([1, 1, 1, || 2, 1]) → true, 
 checkBalance ([2, 1, 1, 2, 1]) → false, 
@@ -215,6 +215,7 @@ bool array_cicle_shift(double arr[], int shift) {
             // step3. insert from the buffer to the 1st eleemnt of array
             arr[0] = buffer;
 
+            // result:
             print_array_by_pointer(&arr[0], arr_t4_size);
         }
         return true;
@@ -222,7 +223,21 @@ bool array_cicle_shift(double arr[], int shift) {
 
     else if (shift < 0) {
         for (int i = 0; i > shift; i--) {
+            // step 1. Taking the 1st element to the buffer:
+            buffer = arr[0];
+            //cout << "buffer = " << buffer << endl;
 
+            // step 2. Shifting the array to the one position left:
+            for (int j = 0; j < arr_t4_size - 1; j++) {
+                //cout << "j = " << j << endl;
+                arr[j] = arr[j+1];
+            }
+
+            // step 3. Insert from the buffer to the last element of the array:
+            arr[arr_t4_size - 1] = buffer;
+
+            // result: 
+            print_array_by_pointer(&arr[0], arr_t4_size);
 
 
         }
@@ -231,6 +246,7 @@ bool array_cicle_shift(double arr[], int shift) {
     
     else {
         cout << "shift = 0; " << "array do not changed" << endl;
+        print_array_by_pointer(&arr[0], arr_t4_size);
         return false; 
     }
     
@@ -283,21 +299,20 @@ int main() {
 
     // task 4:
     {
+        // creating array:
         double arr_t4[arr_t4_size] = {};
         int shift_n;
         
-        //cout  << "this is empty array: ";
         print_array_by_pointer(&arr_t4[0], arr_t4_size);
         random_array_builder(&arr_t4[0], arr_t4_size, 1, 12);
 
-        //cout  << "this is randomly initiated array: ";
+        cout << "this is array to shift: ";
         print_array_by_pointer(&arr_t4[0], arr_t4_size);
         
-        cout  << "Please enter how much times you want to shift the array: "; 
+        // shifting array:
+        cout  << "Please enter how many times you want to shift the array: "; 
         cin >> shift_n;
         array_cicle_shift(arr_t4, shift_n);
-        
-
     }
 
     // task 5:
