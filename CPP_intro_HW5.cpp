@@ -78,7 +78,7 @@ int arr_t2[arr_t2_size] = { 1, 0, 0, 1, 1, 1, 1, 0 };
 int* arr_t2_ptr = &arr_t2[0];
 
 // for task 4:
-const int arr_t4_size = 12;
+const int arr_t4_size = 5;
 
 // Block of functions:
 bool print_array_direct(double arr_fun [], const int arr_size) {
@@ -202,17 +202,15 @@ bool array_cicle_shift(double arr[], int shift) {
 
     if (shift > 0) {
         for (int i = 0; i < shift; i++) {
-            for (int j = 0; j < arr_t4_size - 1;  j++) {
+            buffer = arr[arr_t4_size - 1];
+            cout << "buffer = " << buffer << endl;
 
-                buffer = arr[arr_t4_size - (j + 1)];
-                cout << buffer << ' ';
-                arr[j+1] = arr[j];
-                arr[j] = buffer;
-
+            // shifting array to the right  >> on 1 position:
+            for (int j = (arr_t4_size - 2); j > -1; j --) {
+                cout << "j = " << j << endl;
+                arr[j + 1] = arr[j];
             }
-
-            //arr[arr_t4_size - 1] = buffer;
-            cout << endl;
+            arr[0] = buffer;
             print_array_by_pointer(&arr[0], arr_t4_size);
         }
         return true;
@@ -286,12 +284,12 @@ int main() {
         
         //cout  << "this is empty array: ";
         print_array_by_pointer(&arr_t4[0], arr_t4_size);
-        random_array_builder(&arr_t4[0], arr_t4_size, 1, 42);
+        random_array_builder(&arr_t4[0], arr_t4_size, 1, 12);
 
         //cout  << "this is randomly initiated array: ";
         print_array_by_pointer(&arr_t4[0], arr_t4_size);
         
-        cout  << "Please enter the integer number to shift the array: "; 
+        cout  << "Please enter how much times you want to shift the array: "; 
         cin >> shift_n;
         array_cicle_shift(arr_t4, shift_n);
         
