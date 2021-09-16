@@ -202,15 +202,19 @@ bool array_cicle_shift(double arr[], int shift) {
 
     if (shift > 0) {
         for (int i = 0; i < shift; i++) {
+            // step 1. taking the last element of the array to the buffer:
             buffer = arr[arr_t4_size - 1];
-            cout << "buffer = " << buffer << endl;
+            //cout << "buffer = " << buffer << endl;
 
-            // shifting array to the right  >> on 1 position:
+            // step 2. shifting array to the right  >> on 1 position (HINT: Starts from the previous to the last element)
             for (int j = (arr_t4_size - 2); j > -1; j --) {
-                cout << "j = " << j << endl;
+                //cout << "j = " << j << endl;
                 arr[j + 1] = arr[j];
             }
+
+            // step3. insert from the buffer to the 1st eleemnt of array
             arr[0] = buffer;
+
             print_array_by_pointer(&arr[0], arr_t4_size);
         }
         return true;
