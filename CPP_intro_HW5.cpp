@@ -3,7 +3,6 @@
 #include <random>
 #include <stdlib.h>
 
-
 using namespace std;
 using namespace std::chrono;
 
@@ -66,10 +65,15 @@ checkBalance ([10, || 1, 2, 3, 4]) → true.
 */
 
 // Block of variables:
-const int test_ar_size = 8;
-double test_array[test_ar_size] = { 12.0, 24.10, 14.0, 123.324, 43.5, 13.7, 45.98, 45.89 };
-double* arr_ptr = &test_array[0];
+// for task 1:
+const int arr_t1_size = 8;
+double arr_t1[arr_t1_size] = { 12.0, 24.10, 14.0, 123.324, 43.5, 13.7, 45.98, 45.89 };
+double* arr_t1_ptr = &arr_t1[0];
 
+// for task2:
+const int arr_t2_size = 8;
+int arr_t2[arr_t2_size] = { 1, 0, 0, 1, 1, 1, 1, 0 };
+int* arr_t2_ptr = &arr_t2[0];
 
 // Blcok of functions:
 bool print_array_direct(double arr_fun [], const int ar_size) {
@@ -130,43 +134,87 @@ double duration_of_function_execution(char flg) {
     auto start = high_resolution_clock::now();
 
     // call fucntion:
-    if (flg == 'A') { 
-        print_array_direct(test_array, test_ar_size); 
+    if (flg == 'A') {
+        print_array_direct(arr_t1, arr_t1_size);
     }
 
     if (flg == 'B') {
-        print_array_pointer(arr_ptr, test_ar_size); 
+        print_array_pointer(arr_t1_ptr, arr_t1_size);
     }
 
     auto stop = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(stop - start);
 
-    return duration.count(); 
+    return duration.count();
 
 }
+
+// Redefine the function of array printing (the faster one). It allows to print int arrays also
+bool print_array_pointer(int* arr_ptr, const int ar_size) {
+    /*
+    Функция принимает указатель на первый элемент массива.
+    и выводит на экран остальные элементы массива сдвигая адрес на одну позицию
+    Если массив успешно выведен на экран, то функция возвращает true.
+    В случае ошибки - false
+    */
+
+    if (arr_ptr == nullptr) {
+        cout << "pointer is empty ";
+        return false;
+    }
+
+    if (ar_size == NULL) {
+        cout << "array is empty ";
+        return false;
+    }
+
+    for (int i = 0; i < ar_size; i++) {
+        cout << *(arr_ptr + i) << ' ';
+    };
+    return true;
+}
+
+// Function T3:
 
 int main() {
     // task1:  
     {
-        // variant A: put whole array inside the function: 
-        //print_array_dir(test_array, test_ar_size);
+        //variant A: put whole array inside the function: 
         cout << "printing array takes " << duration_of_function_execution('A') << "micro seconds" << endl; 
         
-        //  variant B: pointer to the fist element of the array:
-        //print_array_ptr(arr_ptr, test_ar_size);
+        //variant B: pointer to the fist element of the array:
         cout << "printing array takes " << duration_of_function_execution('B') << "micro seconds" << endl;
         
     }
     
-
     // task 2: 
     {
-        
-        
+        cout << "initial array: ";
+        print_array_pointer(arr_t2_ptr, arr_t2_size);
 
+        for (int i = 0; i < arr_t2_size; i++) {
+            if (*(arr_t2_ptr + i) == 0) {
+                *(arr_t2_ptr + i) = 1;
+            }
+            else {
+                *(arr_t2_ptr + i) = 0;
+            }
+        };
 
+        cout << endl << "array after transformation: ";
+        print_array_pointer(arr_t2_ptr, arr_t2_size);
+    }
+
+    // task 3:
+    {
+        int arr_t3[8] = {};
+
+        // filling its with numbers:  1 4 7 10 13 16 19 22
+
+        // printing it:
 
     }
+
 
     return 0;
 }
