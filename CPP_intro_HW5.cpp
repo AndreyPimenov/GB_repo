@@ -76,7 +76,7 @@ int arr_t2[arr_t2_size] = { 1, 0, 0, 1, 1, 1, 1, 0 };
 int* arr_t2_ptr = &arr_t2[0];
 
 // Blcok of functions:
-bool print_array_direct(double arr_fun [], const int ar_size) {
+bool print_array_direct(double arr_fun [], const int arr_size) {
     /* 
     Функция выводит массив double чисел на экран.
     Параметры функции это сам массив и его размер.
@@ -89,18 +89,18 @@ bool print_array_direct(double arr_fun [], const int ar_size) {
         return false;
     }
 
-    if (ar_size == NULL) {
+    if (arr_size == NULL) {
         cout << "array is empty ";
         return false;
     }
         
-    for (int i = 0; i < ar_size; i++){
+    for (int i = 0; i < arr_size; i++){
         cout << arr_fun[i] << ' ';
     }
     return true;
 }
 
-bool print_array_pointer(double* arr_ptr, const int ar_size) {
+bool print_array_pointer(double* arr_ptr, const int arr_size) {
     /*
     Функция принимает указатель на первый элемент массива.
     и выводит на экран остальные элементы массива сдвигая адрес на одну позицию 
@@ -113,12 +113,12 @@ bool print_array_pointer(double* arr_ptr, const int ar_size) {
         return false;
     }
         
-    if (ar_size == NULL) {
+    if (arr_size == NULL) {
         cout << "array is empty ";
         return false;
     }
         
-    for (int i = 0; i < ar_size; i++) {
+    for (int i = 0; i < arr_size; i++) {
         cout << *(arr_ptr + i) << ' ';
     };
     return true;
@@ -150,7 +150,7 @@ double duration_of_function_execution(char flg) {
 }
 
 // Redefine the function of array printing (the faster one). It allows to print int arrays also
-bool print_array_pointer(int* arr_ptr, const int ar_size) {
+bool print_array_pointer(int* arr_ptr, const int arr_size) {
     /*
     Функция принимает указатель на первый элемент массива.
     и выводит на экран остальные элементы массива сдвигая адрес на одну позицию
@@ -163,18 +163,25 @@ bool print_array_pointer(int* arr_ptr, const int ar_size) {
         return false;
     }
 
-    if (ar_size == NULL) {
+    if (arr_size == NULL) {
         cout << "array is empty ";
         return false;
     }
 
-    for (int i = 0; i < ar_size; i++) {
+    for (int i = 0; i < arr_size; i++) {
         cout << *(arr_ptr + i) << ' ';
     };
     return true;
 }
 
 // Function T3:
+void predefine_filling_arr(int* arr_ptr, const int arr_size) {
+    for (int i = 0; i < arr_size; i++) {
+        *(arr_ptr + i) = 1 + 3*i;
+    }
+
+}
+
 
 int main() {
     // task1:  
@@ -204,14 +211,20 @@ int main() {
         cout << endl << "array after transformation: ";
         print_array_pointer(arr_t2_ptr, arr_t2_size);
     }
-
+    
+    cout << endl;
     // task 3:
     {
         int arr_t3[8] = {};
+        
+        cout << "t3 before: " ;
+        print_array_pointer(&arr_t3[0], 8);
+        
+        predefine_filling_arr(&arr_t3[0], 8);
+        cout << endl;
 
-        // filling its with numbers:  1 4 7 10 13 16 19 22
-
-        // printing it:
+        cout << "t3 after: " ;
+        print_array_pointer(&arr_t3[0], 8);
 
     }
 
