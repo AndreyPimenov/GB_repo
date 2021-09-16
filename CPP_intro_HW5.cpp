@@ -1,7 +1,8 @@
 #include <iostream>
 #include <chrono>
 #include <random>
-#include <stdlib.h>
+#include <stdlib.h> 
+#include <typeinfo>
 
 using namespace std;
 using namespace std::chrono;
@@ -65,6 +66,7 @@ checkBalance ([10, || 1, 2, 3, 4]) → true.
 */
 
 // Block of variables:
+
 // for task 1:
 const int arr_t1_size = 8;
 double arr_t1[arr_t1_size] = { 12.0, 24.10, 14.0, 123.324, 43.5, 13.7, 45.98, 45.89 };
@@ -75,7 +77,10 @@ const int arr_t2_size = 8;
 int arr_t2[arr_t2_size] = { 1, 0, 0, 1, 1, 1, 1, 0 };
 int* arr_t2_ptr = &arr_t2[0];
 
-// Blcok of functions:
+// for task 4:
+const int arr_t4_size = 12;
+
+// Block of functions:
 bool print_array_direct(double arr_fun [], const int arr_size) {
     /* 
     Функция выводит массив double чисел на экран.
@@ -97,10 +102,11 @@ bool print_array_direct(double arr_fun [], const int arr_size) {
     for (int i = 0; i < arr_size; i++){
         cout << arr_fun[i] << ' ';
     }
+    cout << endl;
     return true;
 }
 
-bool print_array_pointer(double* arr_ptr, const int arr_size) {
+bool print_array_by_pointer(double* arr_ptr, const int arr_size) {
     /*
     Функция принимает указатель на первый элемент массива.
     и выводит на экран остальные элементы массива сдвигая адрес на одну позицию 
@@ -121,6 +127,7 @@ bool print_array_pointer(double* arr_ptr, const int arr_size) {
     for (int i = 0; i < arr_size; i++) {
         cout << *(arr_ptr + i) << ' ';
     };
+    cout << endl;
     return true;
 }
 
@@ -139,7 +146,7 @@ double duration_of_function_execution(char flg) {
     }
 
     if (flg == 'B') {
-        print_array_pointer(arr_t1_ptr, arr_t1_size);
+        print_array_by_pointer(arr_t1_ptr, arr_t1_size);
     }
 
     auto stop = high_resolution_clock::now();
@@ -150,7 +157,7 @@ double duration_of_function_execution(char flg) {
 }
 
 // Redefine the function of array printing (the faster one). It allows to print int arrays also
-bool print_array_pointer(int* arr_ptr, const int arr_size) {
+bool print_array_by_pointer(int* arr_ptr, const int arr_size) {
     /*
     Функция принимает указатель на первый элемент массива.
     и выводит на экран остальные элементы массива сдвигая адрес на одну позицию
@@ -171,10 +178,11 @@ bool print_array_pointer(int* arr_ptr, const int arr_size) {
     for (int i = 0; i < arr_size; i++) {
         cout << *(arr_ptr + i) << ' ';
     };
+    cout << endl;
     return true;
 }
 
-// Function T3:
+// Function task3:
 void predefine_filling_arr(int* arr_ptr, const int arr_size) {
     for (int i = 0; i < arr_size; i++) {
         *(arr_ptr + i) = 1 + 3*i;
@@ -182,6 +190,49 @@ void predefine_filling_arr(int* arr_ptr, const int arr_size) {
 
 }
 
+// Functions for task4:
+void random_array_builder(double* arr_ptr, const int arr_size, int32_t min_element, int32_t max_element) {
+    for (int i = 0; i < arr_size; i++) {
+        *(arr_ptr + i) = getRandomNum(min_element, max_element);
+    }
+}
+
+bool array_cicle_shift(double arr[], int shift) {
+    int buffer;
+
+    if (shift > 0) {
+        for (int i = 0; i < shift; i++) {
+            for (int j = 0; j < arr_t4_size - 1;  j++) {
+
+                buffer = arr[arr_t4_size - (j + 1)];
+                cout << buffer << ' ';
+                arr[j+1] = arr[j];
+                arr[j] = buffer;
+
+            }
+
+            //arr[arr_t4_size - 1] = buffer;
+            cout << endl;
+            print_array_by_pointer(&arr[0], arr_t4_size);
+        }
+        return true;
+    }
+
+    else if (shift < 0) {
+        for (int i = 0; i > shift; i--) {
+
+
+
+        }
+        return true;
+    }
+    
+    else {
+        cout << "shift = 0; " << "array do not changed" << endl;
+        return false; 
+    }
+    
+}
 
 int main() {
     // task1:  
@@ -191,13 +242,13 @@ int main() {
         
         //variant B: pointer to the fist element of the array:
         cout << "printing array takes " << duration_of_function_execution('B') << "micro seconds" << endl;
-        
+        cout << endl;
     }
     
     // task 2: 
     {
         cout << "initial array: ";
-        print_array_pointer(arr_t2_ptr, arr_t2_size);
+        print_array_by_pointer(arr_t2_ptr, arr_t2_size);
 
         for (int i = 0; i < arr_t2_size; i++) {
             if (*(arr_t2_ptr + i) == 0) {
@@ -208,26 +259,49 @@ int main() {
             }
         };
 
-        cout << endl << "array after transformation: ";
-        print_array_pointer(arr_t2_ptr, arr_t2_size);
+        cout << "array after transformation: ";
+        print_array_by_pointer(arr_t2_ptr, arr_t2_size);
+        cout << endl;
     }
     
-    cout << endl;
     // task 3:
     {
         int arr_t3[8] = {};
         
-        cout << "t3 before: " ;
-        print_array_pointer(&arr_t3[0], 8);
+        cout << "t3 array before: " ;
+        print_array_by_pointer(&arr_t3[0], 8);
         
         predefine_filling_arr(&arr_t3[0], 8);
-        cout << endl;
+       
 
-        cout << "t3 after: " ;
-        print_array_pointer(&arr_t3[0], 8);
+        cout << "t3 array after: " ;
+        print_array_by_pointer(&arr_t3[0], 8);
+        cout << endl;
+    }
+
+    // task 4:
+    {
+        double arr_t4[arr_t4_size] = {};
+        int shift_n;
+        
+        //cout  << "this is empty array: ";
+        print_array_by_pointer(&arr_t4[0], arr_t4_size);
+        random_array_builder(&arr_t4[0], arr_t4_size, 1, 42);
+
+        //cout  << "this is randomly initiated array: ";
+        print_array_by_pointer(&arr_t4[0], arr_t4_size);
+        
+        cout  << "Please enter the integer number to shift the array: "; 
+        cin >> shift_n;
+        array_cicle_shift(arr_t4, shift_n);
+        
 
     }
 
+    // task 5:
+    {
+
+    }
 
     return 0;
 }
@@ -239,6 +313,5 @@ https://purecodecpp.com/archives/2286 - references in C++ part II
 https://habr.com/ru/post/251091/ - deeper understanding of pointers & references
 https://ravesli.com/urok-91-tsikl-foreach/ - for each cicle in C++
 https://www.geeksforgeeks.org/measure-execution-time-function-cpp/ - using chrono library 
-
-
+https://www.andreyolegovich.ru/code/cpp/typeid.php - explanation how to return the type of the variable
 */
