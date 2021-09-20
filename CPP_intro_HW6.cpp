@@ -18,3 +18,31 @@
 Используем функцию find которая есть в строках std::string.
 
 */
+
+#include <iostream>
+
+int main(){
+    int* ptrArr; // pointer to array
+    int n = 0; // the size of the array
+
+    std::cout << "Enter the size of array: " << "\n";
+    std::cin >> n;
+
+    if (n > 0){
+        ptrArr = new (std::nothrow) int[n];
+
+        // Working with the array:
+        ptrArr[0] = 100;
+        std::cout << "ptrArr[0] = " << ptrArr[0] << " ";
+
+        //
+        delete ptrArr;
+        ptrArr = nullptr;
+    }
+    else{
+        std::cout << "Error";
+    }
+
+
+  return 0;
+}
