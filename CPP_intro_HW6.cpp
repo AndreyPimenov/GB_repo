@@ -23,6 +23,7 @@
 #include <string>
 #include <math.h>
 #include <fstream>
+#include <chrono>
 
 using namespace std;
 
@@ -39,9 +40,10 @@ void createArrayTask1(int n) {
         // filling it with 2 in the power of i++
         for (int i = 0; i < n; i++) {
             ptrArr[i] = pow(2, i);
-            cout << ptrArr[i] << endl;
+            std::cout << ptrArr[i] << " ";
         }
 
+        std::cout << endl;
         // empty space of the array: 
         delete[] ptrArr;
         ptrArr = nullptr;
@@ -51,27 +53,69 @@ void createArrayTask1(int n) {
     }
 }
 
-void createMatrix(int n, int m) {
-
-
+// Learning point - get random number (from previous class):
+int32_t getRandomNum(int32_t min, int32_t max) {
+    const static auto seed = chrono::system_clock::now().time_since_epoch().count();
+    static mt19937_64 generator(seed);
+    uniform_int_distribution<int32_t> dis(min, max);
+    return dis(generator);
 }
 
-void randomFilling() {
+void createMatrix4X4() {
+    int32_t min_num = 0;
+    int32_t max_num = 0;
 
+    // Diapasone of random number:
+    std::cout << "Please, enter the minimum number on diapasone: ";
+    std::cin >> min_num;
+    std::cout << "\n" << "Please, enter the minimum number on diapasone: ";
+    std::cin >> max_num;
+
+    // creating array: 
+    int** ppArr = new int* [4];
+    for (int i = 0; i < 4; i++) {
+        ppArr[i] = new int[4];
+        //cout << "i = " << i << " ";
+    }
+
+    // filling this array with random numbers:
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            ppArr[i][j] = getRandomNum(min_num, max_num);
+        }
+    }
+
+
+    // printing this array:
+    std::cout << "This is a matrix 4x4: " << endl;
+
+    for (int i = 0; i < 4; i++) {
+        std::cout << endl;
+        for (int j = 0; j < 4; j++) {
+            // cout << "ppArr[" << i << "][" << j << "] = " << ppArr[i][j] << endl; - 1st variant
+            std::cout << ppArr[i][j] << " ";
+        }
+    }
+
+    std::cout << "\n";
+    // emptying the space:
+    for (int i = 0; i < 4; i++) {
+        delete ppArr[i];
+        //cout << "i = " << i << " ";
+    }
+    delete[] ppArr;
 }
 
-void emptyingSpace(int* ptrArr, int size) {
 
-}
+void fillingTextFile(string fileName, string text) {
 
-void fillingTextFile( string fileName, string text) {
-
-    std::cout << "Input the name for the 1st file" << std::endl;
+    std::cout << "Input the name for the file" << std::endl;
     std::cin >> fileName;
 
     // creating file
     // open file
     // writing string to the file
+
 
 }
 
@@ -97,13 +141,14 @@ int main() {
         int n = 0;
         std::cout << "Enter the size of the array = ";
         std::cin >> n;
+
         createArrayTask1(n);
     }
 
 
     // task 2
     {
-
+        createMatrix4X4();
     }
 
     // task 3
@@ -113,12 +158,12 @@ int main() {
         string text2 = "Rasta works a manifest an it a blossom an a bloom, Nature always run it course the tide is rising wit the moon, ";
         std::cout << "There are the size of strings: " << size(text1) << " & " << size(text2) << std::endl;
 
-        
+
 
         fillingTextFile(name1, text1);
 
 
-        fillingTextFile();
+        fillingTextFile(name2, text2);
     }
 
     // task 4
