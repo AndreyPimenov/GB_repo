@@ -106,32 +106,69 @@ void createMatrix4X4() {
     delete[] ppArr;
 }
 
-
 void fillingTextFile(string fileName, string text) {
 
-    std::cout << "Input the name for the file" << std::endl;
-    std::cin >> fileName;
+    // creating the file:
+    ofstream file(fileName + ".txt");
 
-    // creating file
-    // open file
-    // writing string to the file
+    // openning the file:
+    if (!file) {
+        std::cout << "Some problems to writing in file" << std::endl;
+    }
 
+    // writing the string to the file
+    file << text << endl;
 
 }
 
 void addingTextFiles() {
-    // creating new file
-    // reading text from the 1st file 
-    // adding this text to the created file
-    // reading text from the 2nd file
-    // adding this text to the end of created file
+    int n = 0; // number of files to sum up
+    string name; // buffer for name of user files
+    string buffer; // buffer for content of user files
+    string resultFile = "resultFile";
+    string resultString;
+    std::cout << "Please, enter the number of files to sum up: " << endl;
+    std::cin >> n;
+
+    for (int i = 0; i < n; i++) {
+        std::cout << "Please, enter just the name of text file (without .txt): " << endl;
+        cin >> name;
+        // forming the resulting string:
+        ifstream fin(name + ".txt");
+        if (fin.is_open()) {
+            while (!fin.eof()) {
+                getline(fin, buffer);
+                resultString = resultString + " " + buffer;
+                //std::cout << buffer << endl;
+            }
+            fin.close();
+        }
+    }
+
+    fillingTextFile(resultFile, resultString);
 }
 
-void lookingForWordInText() {
-    // ask user what we have to find inside the file
-    // open file from the task 4  
-    // line by line looking the input word or sentence (string) 
+void lookingForWordInText(string wordToFind, string fileName) {
+    string buffer; // buffer for content of user files
 
+    // line by line looking the input word or sentence (string) 
+    ifstream fin(fileName);
+    if (fin.is_open()) {
+        while (!fin.eof()) {
+            string curentOne;
+
+            fin >> curentOne;
+            
+            if (wordToFind == curentOne) {
+                std::cout << "currentOne = " << curentOne << " " << "wordToFind = " << wordToFind << endl;
+                break;
+            }
+            else {
+                continue; // std::cout << "Not found\n";
+            }
+        }
+        fin.close();
+    }
 }
 
 int main() {
@@ -145,7 +182,6 @@ int main() {
         createArrayTask1(n);
     }
 
-
     // task 2
     {
         createMatrix4X4();
@@ -158,12 +194,16 @@ int main() {
         string text2 = "Rasta works a manifest an it a blossom an a bloom, Nature always run it course the tide is rising wit the moon, ";
         std::cout << "There are the size of strings: " << size(text1) << " & " << size(text2) << std::endl;
 
-
-
+        // 1st:
+        std::cout << "Input the name for the file" << std::endl;
+        std::cin >> name1;
         fillingTextFile(name1, text1);
 
-
+        //2nd:
+        std::cout << "Input the name for the file" << std::endl;
+        std::cin >> name2;
         fillingTextFile(name2, text2);
+
     }
 
     // task 4
@@ -173,10 +213,19 @@ int main() {
 
     // task 5
     {
-        lookingForWordInText();
+        string wordToFind;
+        string fileName = "resultFile.txt";
+
+        std::cout << "Please enter the word to find: " << endl;
+        std::cin >> wordToFind;
+
+        lookingForWordInText(wordToFind,fileName);
     }
-
-
 
     return 0;
 }
+
+// PS - Usefull links:
+// https://ravesli.com/urok-212-bazovyj-fajlovyj-vvod-vyvod/ = working with files 
+// https://www.cplusplus.com/reference/string/string/ = Oficial Documents for string 
+// https://www.cyberforum.ru/cpp-beginners/thread806146.html = helps for 5th task of the problem set 
