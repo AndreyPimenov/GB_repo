@@ -106,21 +106,24 @@ bool vectorCheck(gameSymbols* vector, int Size) {
 	gameSymbols temp = vector[Size]; // берем послений элемент вектора и проходим весь вектор на его равенство:
 
 	for (int i = 0; i < Size; i++) {
-		if ((vector[i] != gameSymbols::empty) && (vector[i] == temp)) {
-			
-		}
-		else {
-			return false;
-		}
-		return true;
+		std::cout << "This is a vector : " << vector[i]; 
+		//if ((vector[i] != gameSymbols::empty) && (vector[i] == temp)) {
+		//	continue;
+	   // }
+		//else {
+		//	return false;
+		//	break;
+		//}
+		//return true;
 	}
+	return true;
 }
 
 bool playerVictoryCheck(gameSymbols** array, int Rows, int Colomns, int x_internal, int y_internal, int vectorSize) {
 	// creating array: 
 	gameSymbols* checkingArray = new gameSymbols[vectorSize]; // creating 1D array of elements to check
 
-	// horizontal check:
+	// vertical check:
 	{
 		std::cout << "vertical: ";
 		for (int i = 0; i < Rows; i++) {
@@ -131,10 +134,11 @@ bool playerVictoryCheck(gameSymbols** array, int Rows, int Colomns, int x_intern
 		std::cout << std::endl;
 
 		// return bool function (checkingArray);
-		return vectorCheck(checkingArray, vectorSize);
+		std::cout << "main_flag 1 = " << vectorCheck(checkingArray, vectorSize) << std::endl;
+		//return vectorCheck(checkingArray, vectorSize);
 	};
 	
-	// vertical check:
+	// horizontal check:
 	{
 		std::cout << "horizontal: ";
 		for (int j = 0; j < Colomns; j++) {
@@ -145,7 +149,8 @@ bool playerVictoryCheck(gameSymbols** array, int Rows, int Colomns, int x_intern
 		std::cout << std::endl;
 
 		// return bool function (checkingArray);
-		return vectorCheck(checkingArray, vectorSize);
+		std::cout << "main_flag 2 = " << vectorCheck(checkingArray, vectorSize) << std::endl;
+		//return vectorCheck(checkingArray, vectorSize);
 	};
 
 	// diagonal check from the top left to the bottom right: (diagonalTL2BR)
@@ -210,9 +215,9 @@ bool playerVictoryCheck(gameSymbols** array, int Rows, int Colomns, int x_intern
 			}
 		}
 
-		
 		// return bool function (checkingArray);
-		return vectorCheck(checkingArray, vectorSize);
+		std::cout << "main_flag 3 = " << vectorCheck(checkingArray, vectorSize) << std::endl;
+		//return vectorCheck(checkingArray, vectorSize);
 	};
 	
 	// diagonal check from the bottom left to the top right: (diagonalBL2TR)
@@ -280,7 +285,8 @@ bool playerVictoryCheck(gameSymbols** array, int Rows, int Colomns, int x_intern
 		}
 
 		// return bool function (checkingArray);
-		return vectorCheck(checkingArray, vectorSize);
+		std::cout << "main_flag 4 = " << vectorCheck(checkingArray, vectorSize) << std::endl;
+		//return vectorCheck(checkingArray, vectorSize);
 	};
 
 	// emptying space:
@@ -288,15 +294,14 @@ bool playerVictoryCheck(gameSymbols** array, int Rows, int Colomns, int x_intern
 	checkingArray = nullptr;
 
 	return false;
+	//return vectorCheck(checkingArray, vectorSize);
 }
-
 
 void deleteGameField(gameSymbols** data, int Rows)
 {
 	for (int r = 0; r < Rows; r++) delete[] data[r];
 	delete[] data;
 }
-
 
 int main() {
 	int fieldSize = 3;
@@ -339,13 +344,10 @@ int main() {
 	}
 
 	// 3rd Block - empty space after the working process:
-
-	
 	deleteGameField(gameField, fieldSize); 
 	gameField = nullptr;
 	return 0; 
 }
-
 
 // PS:
 // 1. resizing the array: 
