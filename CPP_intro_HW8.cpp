@@ -173,6 +173,8 @@ int main() {
 enum gameSymbols { empty, X, O,};
 bool orderFlg = 1; // 1 - 1st player "X"; 0 - 2nd player "O" 
 int orderStep; // th
+int x = 0;
+int y = 0;
 
 char printSymbol(gameSymbols cell) {
 	// symbol printing:
@@ -209,17 +211,15 @@ void gameFieldUpdate(gameSymbols** array, int Rows, int Colomns) {
 	}
 }
 
-bool gameSymbolChange(gameSymbols** array, int Rows, int Colomns, bool player) {
-	int x = 0;
-	int y = 0;
-
+bool gameSymbolChanged(gameSymbols** array, int Rows, int Colomns, bool player) {
+	
 	std::cout << "Enter the x coordinate:" << std::endl;
 	std::cin >> x;
 
 	std::cout << "Enter the y coordinate:" << std::endl;
 	std::cin >> y;
-
-	if (array[x][y] == gameSymbols::empty) {
+	// 1. cell should be empty; 2. x has to relevant; 3. y has to be relevent.
+	if ((array[x][y] == gameSymbols::empty)&&(x < Rows) && (y < Colomns)) {
 		if (player == 1) {
 			array[x][y] = gameSymbols::X;
 		}
@@ -233,16 +233,16 @@ bool gameSymbolChange(gameSymbols** array, int Rows, int Colomns, bool player) {
 	}return false;
 }
 
-
 bool playerMakeStep(gameSymbols** array, int Rows, int Colomns, bool player) {
-	bool result; // true = step was succesfully finished; false = same player needs to make another step 
+	
 	if (player == 1) {
 		std::cout << "1st player make step: " << std::endl;
-		result = gameSymbolChange(array, Rows, Colomns, player);
-		if (result) {
-			std::cout << "HEre";
+		// true = step was succesfully finished; false = same player needs to make another step:
+		
+		if (gameSymbolChanged(array, Rows, Colomns, player)) {
 			
 			player = !player;
+			orderStep++;
 		}
 		else { player = player; }
 		
@@ -250,18 +250,18 @@ bool playerMakeStep(gameSymbols** array, int Rows, int Colomns, bool player) {
 
 	else if (player == 0) {
 		std::cout << "2nd player make step: " << std::endl;
+		// true = step was succesfully finished; false = same player needs to make another step:
 
-		if (gameSymbolChange(array, Rows, Colomns, player)) {
+		if (gameSymbolChanged(array, Rows, Colomns, player)) {
 			
 			player = !player;
+			orderStep++;
 		}
 		else { player = player; }
 	}
 	return player;
 }
 
-
-// free space:
 void deleteGameField(gameSymbols** data, int Rows)
 {
 	for (int r = 0; r < Rows; r++) delete[] data[r];
@@ -289,10 +289,10 @@ int main() {
 
 		orderFlg = playerMakeStep(gameField, fieldSize, fieldSize, orderFlg);
 		
-		//gameSymbolChange(gameField, fieldSize, fieldSize, 1);
-
 		gameFieldUpdate(gameField, fieldSize, fieldSize);
-		orderStep++; 
+
+		std::cout << "we use x = " << x << "we use y = " << y << std::endl;
+
 
 	}
 
