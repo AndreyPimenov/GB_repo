@@ -1,4 +1,3 @@
-
 // HW8:
 // Cделать решение на поле 4х4 или 5х5 или на динамическом поле, размер которого ввел пользователь.
 // Также можно запросить у пользователя количество фигур необходимое для выигрыша, 3 - 5.
@@ -133,10 +132,13 @@ bool playerVictoryCheck(gameSymbols** array, int Rows, int Colomns, int x_intern
 		// return bool function (checkingArray);
 	};
 	
+	
+
+
 
 	// diagonal check from the top left to the bottom right: (diagonalTL2BR)
 	{
-
+		int elementCounting = 0; // in some cases diagonal less than vector to win in this case we do not check it
 
 		std::cout << "diagonal from top left to bottom right: ";
 
@@ -148,6 +150,7 @@ bool playerVictoryCheck(gameSymbols** array, int Rows, int Colomns, int x_intern
 			std::cout << printSymbol(array[x_check][y_check]);
 			x_check--;
 			y_check--;
+			elementCounting++;
 		}
 
 		// reset operators:
@@ -158,9 +161,18 @@ bool playerVictoryCheck(gameSymbols** array, int Rows, int Colomns, int x_intern
 			std::cout << printSymbol(array[x_check][y_check]);
 			x_check++;
 			y_check++;
+			elementCounting++;
 		}
 		std::cout << std::endl;
-		
+		std::cout << elementCounting << std::endl;
+
+		if (elementCounting >= vectorSize) {
+			// записать в массив:
+			for (int k = 0; k < vectorSize; k++) {
+
+			}
+		}
+
 		// return bool function (checkingArray);
 	};
 	
@@ -168,6 +180,9 @@ bool playerVictoryCheck(gameSymbols** array, int Rows, int Colomns, int x_intern
 
 	// diagonal check from the bottom left to the top right: (diagonalBL2TR)
 	{
+		int elementCounting = 0; // in some cases diagonal less than vector to win in this case we do not check it
+
+
 		std::cout << "diagonal from the bottom left to the top right: ";
 		// reset operators:
 		int x_check = x_internal; int y_check = y_internal;
@@ -175,7 +190,9 @@ bool playerVictoryCheck(gameSymbols** array, int Rows, int Colomns, int x_intern
 		// x and y both decrease:
 		while ((x_check < Rows) && (y_check != -1)) {
 			std::cout << printSymbol(array[x_check][y_check]);
-			x_check++; y_check--;
+			x_check++; 
+			y_check--; 
+			elementCounting++;
 		}
 
 		// reset operators:
@@ -184,9 +201,19 @@ bool playerVictoryCheck(gameSymbols** array, int Rows, int Colomns, int x_intern
 		// x and y both increase:
 		while ((x_check != -1) && (y_check < Colomns)) {
 			std::cout << printSymbol(array[x_check][y_check]);
-			x_check--; y_check++;
+			x_check--; 
+			y_check++; 
+			elementCounting++;
 		}
 		std::cout << std::endl;
+		std::cout << elementCounting << std::endl;
+
+		if (elementCounting >= vectorSize) {
+			// записать в массив
+			for (int k = 0; k < vectorSize; k++) {
+
+			}
+		}
 
 		// return bool function (checkingArray);
 	};
@@ -258,5 +285,3 @@ int main() {
 // https://coderoad.ru/31230610/C-%D0%B8%D0%BD%D0%B8%D1%86%D0%B8%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F-%D0%BC%D0%B0%D1%81%D1%81%D0%B8%D0%B2%D0%B0-%D0%BF%D0%BE-%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B5-%D1%87%D0%B5%D1%80%D0%B5%D0%B7-%D1%84%D1%83%D0%BD%D0%BA%D1%86%D0%B8%D1%8E
 // 3. проверка на целочисленный тип данных:
 // https://coderoad.ru/784563/C-%D0%BF%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%B8%D1%82%D1%8C-%D1%8F%D0%B2%D0%BB%D1%8F%D0%B5%D1%82%D1%81%D1%8F-%D0%BB%D0%B8-%D1%87%D0%B8%D1%81%D0%BB%D0%BE-%D0%B8%D0%BD%D1%82-%D1%84%D0%BB%D0%BE%D0%B0%D1%82
-
-	
