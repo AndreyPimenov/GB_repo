@@ -1,166 +1,3 @@
-//HW7:
-/*
-1. Создайте проект из 2х cpp файлов и заголовочного (main.cpp, mylib.cpp, mylib.h)
-во втором модуле mylib объявить 3 функции: для инициализации массива (типа float), 
-печати его на экран и подсчета количества отрицательных и положительных элементов.
-Вызывайте эти 3-и функции из main для работы с массивом.
-
-2. Описать макрокоманду (через директиву define), проверяющую, входит ли переданное ей число (введенное с клавиатуры)
-в диапазон от нуля (включительно) до переданного ей второго аргумента (исключительно) и возвращает true или false, 
-вывести на экран «true» или «false».
-
-3. Задайте массив типа int. Пусть его размер задается через директиву препроцессора #define.
-Инициализируйте его через ввод с клавиатуры. Напишите для него свою функцию сортировки (например Пузырьком).
-Реализуйте перестановку элементов как макрокоманду SwapINT(a, b). Вызывайте ее из цикла сортировки.
-
-4. * Объявить структуру Сотрудник с различными полями. Сделайте для нее побайтовое выравнивание с помощью директивы pragma pack.
-Выделите динамически переменную этого типа. Инициализируйте ее. Выведите ее на экран и ее размер с помощью sizeof. 
-Сохраните эту структуру в текстовый файл.
-
-5. * Сделайте задание 1 добавив свой неймспейс во втором модуле (первое задание тогда можно не делать).
-*/
-
-/*
-#include <iostream>
-#include <fstream>
-#include <string>
-
-#include "mylib.h"
-
-using namespace std;
-
-// task 2:
-#define PRINT_STR(str)  std::cout << str << endl;
-#define LESSTHAN(n1, n2) ( n1 < n2 )
-
-#define ARSIZE 6 
-#define SwapINT(a,b) \
-int temp = b; b = a; a = temp; \
-
-void arrayBubbleSort(float array[], const int size) {
-	for (int i = size - 1; i > 0; i--)
-	{
-		for (int j = 0; j < i; j++)
-			if (array[j] > array[j + 1])
-			{
-				SwapINT(array[j], array[j + 1]);
-			}
-	}
-}
-
-int main() {
-	// task 1
-	{
-		const int size = 5;
-		float arrTask1[size] = {};
-		arrayInitialization(arrTask1, size);
-		arrayPrinting(arrTask1, size);
-		posNegCounting(arrTask1, size);
-	}
-
-	// task 2
-	{
-		int n1 = 0;
-		int n2 = 0;
-		std::cout << "Enter the fist number: " << std::endl;
-		std::cin >> n1;
-		std::cout << "Enter the fist number: " << std::endl;
-		std::cin >> n2;
-
-		//PRINT_STR(LESSTHAN(n1, n2));
-
-		if (LESSTHAN(n1, n2) == 1) {
-			PRINT_STR("true");
-		}
-		else {
-			PRINT_STR("false");
-		}
-	}
-
-
-	// task 3
-	
-	{
-		float arrTask3[ARSIZE] = {};
-		arrayInitialization(arrTask3, ARSIZE);
-		arrayPrinting(arrTask3, ARSIZE);
-
-		arrayBubbleSort(arrTask3, ARSIZE);
-		arrayPrinting(arrTask3, ARSIZE);
-	}
-	
-
-
-	// task 4
-	{
-		//Объявить структуру Сотрудник с различными полями.
-		//Сделайте для нее побайтовое выравнивание с помощью директивы pragma pack.
-        #pragma pack(push, 1)
-		struct Employee {
-			string name; 
-			string position;
-			float salary;
-			int id;
-		};
-        #pragma pack(pop)
-
-		//Выделите динамически переменную этого типа.
-		Employee* e1 = new Employee;
-
-		//Инициализируйте ее.
-		e1->name = "Bob";
-		e1->position = "Head of Sales";
-		e1->salary = 1221.45;
-		e1->id = 123345;
-
-		//Выведите ее на экран и ее размер с помощью sizeof.
-		std::cout << e1->name << endl;
-		std::cout << e1->position << endl;
-		std::cout << e1->salary << endl;
-		std::cout << e1->id << endl;
-
-		std::cout << sizeof(Employee) << endl;
-
-		//Сохраните эту структуру в текстовый файл.
-		// creating the file:
-		ofstream file("struct.txt");
-
-		// openning the file:
-		if (!file) {
-			std::cout << "Some problems to writing in file" << std::endl;
-		}
-
-		// writing the string to the file
-		file << e1->name << endl;
-		file << e1->position << endl;
-		file << e1->salary << endl;
-		file << e1->id << endl;
-
-		//*Удалить структуру:
-		delete e1;
-	}
-
-	// task 5
-	
-	{	
-		
-		const int size = 5;
-		float arrTask5[size] = {};
-		MyLib::MyLib_arrayInitialization(arrTask5, size);
-		MyLib::MyLib_arrayPrinting(arrTask5, size);
-		MyLib::MyLib_posNegCounting(arrTask5, size);
-
-	}
-	
-
-	return 0; 
-}
-
-*/
-
-// PS Udesul link:
-// https://stackoverflow.com/questions/4134323/c-how-to-delete-a-structure
-
 // HW8:
 // Cделать решение на поле 4х4 или 5х5 или на динамическом поле, размер которого ввел пользователь.
 // Также можно запросить у пользователя количество фигур необходимое для выигрыша, 3 - 5.
@@ -170,11 +7,13 @@ int main() {
 
 //using namespace std;
 
+
 enum gameSymbols { empty, X, O,};
 bool orderFlg = 1; // 1 - 1st player "X"; 0 - 2nd player "O" 
 int orderStep; // th
 int x = 0;
 int y = 0;
+bool victoryFlg = false;
 
 char printSymbol(gameSymbols cell) {
 	// symbol printing:
@@ -219,18 +58,19 @@ bool gameSymbolChanged(gameSymbols** array, int Rows, int Colomns, bool player) 
 	std::cout << "Enter the y coordinate:" << std::endl;
 	std::cin >> y;
 	// 1. cell should be empty; 2. x has to relevant; 3. y has to be relevent.
-	if ((array[x][y] == gameSymbols::empty)&&(x < Rows) && (y < Colomns)) {
-		if (player == 1) {
-			array[x][y] = gameSymbols::X;
+		if ((array[x][y] == gameSymbols::empty) && (0 <= x < Rows) && (0 <= y < Colomns)) {
+			if (player == 1) {
+				array[x][y] = gameSymbols::X;
+			}
+			if (player == 0) {
+				array[x][y] = gameSymbols::O;
+			}
+			return true;
 		}
-		if (player == 0) {
-			array[x][y] = gameSymbols::O;
+		else {
+			std::cout << "Same player try again" << std::endl;
+			return false;
 		}
-		return true;
-	}
-	else {
-		std::cout << "Same player try again" << std::endl;
-	}return false;
 }
 
 bool playerMakeStep(gameSymbols** array, int Rows, int Colomns, bool player) {
@@ -262,6 +102,82 @@ bool playerMakeStep(gameSymbols** array, int Rows, int Colomns, bool player) {
 	return player;
 }
 
+void playerVictoryCheck(gameSymbols** array, int Rows, int Colomns, int x_internal, int y_internal) {
+	// horizontal check:
+	{
+		std::cout << "vertical: ";
+		for (int i = 0; i < Rows; i++) {
+			std::cout << printSymbol(array[i][y_internal]);
+		}
+		std::cout << std::endl;
+	};
+	
+	// vertical check:
+	{
+		std::cout << "horizontal: ";
+		for (int j = 0; j < Colomns; j++) {
+			std::cout << printSymbol(array[x_internal][j]);
+		}
+		std::cout << std::endl;
+	};
+	
+	
+	// diagonal from the top left to the bottom right: (diagonalTL2BR)
+	{
+		std::cout << "diagonal from top left to bottom right: ";
+		// create operators:
+		int x_check = x_internal; int y_check = y_internal; 
+		
+		// x and y both decrease:
+		while ((x_check != 0) && (y_check != 0)) {
+			std::cout << printSymbol(array[x_check][y_check]);
+			x_check--;
+			y_check--;
+		}
+
+		// reset operators:
+		x_check = x_internal; y_check = y_internal; 
+
+		// x and y both increase:
+		while ((x_check < Rows) && (y_check < Colomns)) {
+			std::cout << printSymbol(array[x_check][y_check]);
+			x_check++;
+			y_check++;
+		}
+		std::cout << std::endl;
+	};
+	
+
+	// diagonal from the bottom left to the top right: (diagonalBL2TR)
+	{
+		std::cout << "diagonal from the bottom left to the top right: ";
+		// reset operators:
+		int x_check = x_internal; int y_check = y_internal;
+
+		// x and y both decrease:
+		while ((x_check < (Rows-1)) && (y_check != 0)) {
+			std::cout << printSymbol(array[x_check][y_check]);
+			x_check++; y_check--;
+		}
+
+		// reset operators:
+		x_check = x_internal; y_check = y_internal;
+
+		// x and y both increase:
+		while ((x_check != 0) && (y_check < (Colomns-1))) {
+			std::cout << printSymbol(array[x_check][y_check]);
+			x_check--; y_check++;
+		}
+		std::cout << std::endl;
+	};
+
+
+	//return victoryFlg;
+}
+
+
+
+
 void deleteGameField(gameSymbols** data, int Rows)
 {
 	for (int r = 0; r < Rows; r++) delete[] data[r];
@@ -270,33 +186,42 @@ void deleteGameField(gameSymbols** data, int Rows)
 
 
 int main() {
+	int fieldSize = 3;
+	int vectorSize = 3;
 
 	// 1st Block - Initialisation of the field & victory vector sizes:
-	int fieldSize;
 	std::cout << "Enter the size of square field: " << std::endl;
 	std::cin >> fieldSize;
 	fieldSize = (static_cast<int>(fieldSize) == fieldSize) ? fieldSize : 3; // filedSize must be integer
 
-	int vectorSize;
 	std::cout << "Enter the size of the sequence enought for victory " << std::endl;
 	std::cin >> vectorSize;
-	vectorSize = ((static_cast<int>(vectorSize) == vectorSize) & (static_cast<int>(vectorSize) < fieldSize)) ? vectorSize : 3;
+
+	
+
+	vectorSize = ((static_cast<int>(vectorSize) == vectorSize) && (static_cast<int>(vectorSize) < fieldSize)) ? vectorSize : 3;
 	 
     gameSymbols ** gameField =  fieldGeneration(fieldSize, fieldSize);
+	gameFieldUpdate(gameField, fieldSize, fieldSize); // just ofr demonstration initial field
+
+	std::cout << "Show must go on !!! " << std::endl;
+
+	
 
 	// 2nd Block - Game:
-	while (orderStep < fieldSize * fieldSize) {
+	while ((orderStep < fieldSize * fieldSize) && (victoryFlg == false)) {
 
 		orderFlg = playerMakeStep(gameField, fieldSize, fieldSize, orderFlg);
 		
 		gameFieldUpdate(gameField, fieldSize, fieldSize);
+		//std::cout << "we use x = " << x << " " << "we use y = " << y << std::endl;
 
-		std::cout << "we use x = " << x << "we use y = " << y << std::endl;
-
-
+		
+		if (orderStep >= (vectorSize * 2 - 1)) { // there is no reason to check it before
+			playerVictoryCheck(gameField, fieldSize, fieldSize, x, y);
+		}
+	
 	}
-
-
 
 	// 3rd Block - empty space after the working process:
 	deleteGameField(gameField, fieldSize); 
