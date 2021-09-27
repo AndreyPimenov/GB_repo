@@ -1,3 +1,4 @@
+
 // HW8:
 // Cделать решение на поле 4х4 или 5х5 или на динамическом поле, размер которого ввел пользователь.
 // Также можно запросить у пользователя количество фигур необходимое для выигрыша, 3 - 5.
@@ -102,29 +103,43 @@ bool playerMakeStep(gameSymbols** array, int Rows, int Colomns, bool player) {
 	return player;
 }
 
-void playerVictoryCheck(gameSymbols** array, int Rows, int Colomns, int x_internal, int y_internal) {
+bool playerVictoryCheck(gameSymbols** array, int Rows, int Colomns, int x_internal, int y_internal, int vectorSize) {
+	// creating array: 
+	gameSymbols* checkingArray = new gameSymbols[vectorSize]; // creating 1D array of elements to check
+
 	// horizontal check:
 	{
 		std::cout << "vertical: ";
 		for (int i = 0; i < Rows; i++) {
-			std::cout << printSymbol(array[i][y_internal]);
+			//std::cout << printSymbol(array[i][y_internal]);
+			checkingArray[i] = array[i][y_internal];
+			std::cout << printSymbol(checkingArray[i]);
 		}
 		std::cout << std::endl;
+
+		// return bool function (checkingArray);
 	};
 	
 	// vertical check:
 	{
 		std::cout << "horizontal: ";
 		for (int j = 0; j < Colomns; j++) {
-			std::cout << printSymbol(array[x_internal][j]);
+			//std::cout << printSymbol(array[x_internal][j]);
+			checkingArray[j] = array[x_internal][j];
+			std::cout << printSymbol(checkingArray[j]);
 		}
 		std::cout << std::endl;
+
+		// return bool function (checkingArray);
 	};
 	
-	
-	// diagonal from the top left to the bottom right: (diagonalTL2BR)
+
+	// diagonal check from the top left to the bottom right: (diagonalTL2BR)
 	{
+
+
 		std::cout << "diagonal from top left to bottom right: ";
+
 		// create operators:
 		int x_check = x_internal; int y_check = y_internal; 
 		
@@ -145,10 +160,13 @@ void playerVictoryCheck(gameSymbols** array, int Rows, int Colomns, int x_intern
 			y_check++;
 		}
 		std::cout << std::endl;
+		
+		// return bool function (checkingArray);
 	};
 	
 
-	// diagonal from the bottom left to the top right: (diagonalBL2TR)
+
+	// diagonal check from the bottom left to the top right: (diagonalBL2TR)
 	{
 		std::cout << "diagonal from the bottom left to the top right: ";
 		// reset operators:
@@ -169,10 +187,13 @@ void playerVictoryCheck(gameSymbols** array, int Rows, int Colomns, int x_intern
 			x_check--; y_check++;
 		}
 		std::cout << std::endl;
+
+		// return bool function (checkingArray);
 	};
 
 
-	//return victoryFlg;
+
+	return false;
 }
 
 
@@ -217,8 +238,8 @@ int main() {
 		//std::cout << "we use x = " << x << " " << "we use y = " << y << std::endl;
 
 		
-		if (orderStep >= (vectorSize * 2 - 1)) { // there is no reason to check it before
-			playerVictoryCheck(gameField, fieldSize, fieldSize, x, y);
+		if (orderStep >= (vectorSize * 2 - 1)) { // <<--- there is no reason to check it before
+			victoryFlg = playerVictoryCheck(gameField, fieldSize, fieldSize, x, y, vectorSize);
 		}
 	
 	}
