@@ -202,8 +202,6 @@ gameSymbols** fieldGeneration(int Rows, int Colomns) {
 void gameFieldUpdate(gameSymbols** array, int Rows, int Colomns) {
 	std::cout << "This is relevant game field: " << std::endl;
 	for (int r = 0; r < Rows; r++) {
-		
-		array[r] = new gameSymbols[Colomns]();
 		for (int c = 0; c < Colomns; c++) {
 			std::cout << printSymbol(array[r][c]) << "  ";
 		}
@@ -225,7 +223,7 @@ bool gameSymbolChange(gameSymbols** array, int Rows, int Colomns, bool player) {
 		if (player == 1) {
 			array[x][y] = gameSymbols::X;
 		}
-		if (player == 2) {
+		if (player == 0) {
 			array[x][y] = gameSymbols::O;
 		}
 		return true;
@@ -235,13 +233,15 @@ bool gameSymbolChange(gameSymbols** array, int Rows, int Colomns, bool player) {
 	}return false;
 }
 
+
 bool playerMakeStep(gameSymbols** array, int Rows, int Colomns, bool player) {
 	bool result; // true = step was succesfully finished; false = same player needs to make another step 
 	if (player == 1) {
 		std::cout << "1st player make step: " << std::endl;
 		result = gameSymbolChange(array, Rows, Colomns, player);
 		if (result) {
-			gameFieldUpdate(array, Rows, Colomns);
+			std::cout << "HEre";
+			
 			player = !player;
 		}
 		else { player = player; }
@@ -252,7 +252,7 @@ bool playerMakeStep(gameSymbols** array, int Rows, int Colomns, bool player) {
 		std::cout << "2nd player make step: " << std::endl;
 
 		if (gameSymbolChange(array, Rows, Colomns, player)) {
-			gameFieldUpdate(array, Rows, Colomns);
+			
 			player = !player;
 		}
 		else { player = player; }
@@ -289,6 +289,9 @@ int main() {
 
 		orderFlg = playerMakeStep(gameField, fieldSize, fieldSize, orderFlg);
 		
+		//gameSymbolChange(gameField, fieldSize, fieldSize, 1);
+
+		gameFieldUpdate(gameField, fieldSize, fieldSize);
 		orderStep++; 
 
 	}
