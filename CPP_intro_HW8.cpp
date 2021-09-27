@@ -129,14 +129,14 @@ void playerVictoryCheck(gameSymbols** array, int Rows, int Colomns, int x_intern
 		int x_check = x_internal; int y_check = y_internal; 
 		
 		// x and y both decrease:
-		while ((x_check != 0) && (y_check != 0)) {
+		while ((x_check != -1) && (y_check != -1)) {
 			std::cout << printSymbol(array[x_check][y_check]);
 			x_check--;
 			y_check--;
 		}
 
 		// reset operators:
-		x_check = x_internal; y_check = y_internal; 
+		x_check = x_internal+1; y_check = y_internal+1; 
 
 		// x and y both increase:
 		while ((x_check < Rows) && (y_check < Colomns)) {
@@ -155,16 +155,16 @@ void playerVictoryCheck(gameSymbols** array, int Rows, int Colomns, int x_intern
 		int x_check = x_internal; int y_check = y_internal;
 
 		// x and y both decrease:
-		while ((x_check < (Rows-1)) && (y_check != 0)) {
+		while ((x_check < Rows) && (y_check != -1)) {
 			std::cout << printSymbol(array[x_check][y_check]);
 			x_check++; y_check--;
 		}
 
 		// reset operators:
-		x_check = x_internal; y_check = y_internal;
+		x_check = x_internal-1; y_check = y_internal+1;
 
 		// x and y both increase:
-		while ((x_check != 0) && (y_check < (Colomns-1))) {
+		while ((x_check != -1) && (y_check < Colomns)) {
 			std::cout << printSymbol(array[x_check][y_check]);
 			x_check--; y_check++;
 		}
