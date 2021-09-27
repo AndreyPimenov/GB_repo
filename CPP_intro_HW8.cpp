@@ -102,6 +102,20 @@ bool playerMakeStep(gameSymbols** array, int Rows, int Colomns, bool player) {
 	return player;
 }
 
+bool vectorCheck(gameSymbols* vector, int Size) {
+	gameSymbols temp = vector[Size]; // берем послений элемент вектора и проходим весь вектор на его равенство:
+
+	for (int i = 0; i < Size; i++) {
+		if ((vector[i] != gameSymbols::empty) && (vector[i] == temp)) {
+			
+		}
+		else {
+			return false;
+		}
+		return true;
+	}
+}
+
 bool playerVictoryCheck(gameSymbols** array, int Rows, int Colomns, int x_internal, int y_internal, int vectorSize) {
 	// creating array: 
 	gameSymbols* checkingArray = new gameSymbols[vectorSize]; // creating 1D array of elements to check
@@ -117,6 +131,7 @@ bool playerVictoryCheck(gameSymbols** array, int Rows, int Colomns, int x_intern
 		std::cout << std::endl;
 
 		// return bool function (checkingArray);
+		return vectorCheck(checkingArray, vectorSize);
 	};
 	
 	// vertical check:
@@ -130,11 +145,8 @@ bool playerVictoryCheck(gameSymbols** array, int Rows, int Colomns, int x_intern
 		std::cout << std::endl;
 
 		// return bool function (checkingArray);
+		return vectorCheck(checkingArray, vectorSize);
 	};
-	
-	
-
-
 
 	// diagonal check from the top left to the bottom right: (diagonalTL2BR)
 	{
@@ -164,20 +176,45 @@ bool playerVictoryCheck(gameSymbols** array, int Rows, int Colomns, int x_intern
 			elementCounting++;
 		}
 		std::cout << std::endl;
-		std::cout << elementCounting << std::endl;
+		//std::cout << elementCounting << std::endl;
 
+		// записать в массив:
 		if (elementCounting >= vectorSize) {
-			// записать в массив:
 			for (int k = 0; k < vectorSize; k++) {
 
+				// create operators:
+				int x_check = x_internal; int y_check = y_internal;
+
+				while ((x_check != -1) && (y_check != -1)) {
+					//std::cout << printSymbol(array[x_check][y_check]);
+					checkingArray[k] = array[x_check][y_check];
+					//std::cout << "diagonal = " << printSymbol(checkingArray[k]);
+					x_check--;
+					y_check--;
+					k++;
+			
+				}
+
+				x_check = x_internal + 1; y_check = y_internal + 1;
+
+				while ((x_check < Rows) && (y_check < Colomns)) {
+					//std::cout << printSymbol(array[x_check][y_check]);
+					checkingArray[k] = array[x_check][y_check];
+					//std::cout << "diagonal = " << printSymbol(checkingArray[k]);
+					x_check++;
+					y_check++;
+					k++;
+					
+				}
+				std::cout << std::endl;
 			}
 		}
 
+		
 		// return bool function (checkingArray);
+		return vectorCheck(checkingArray, vectorSize);
 	};
 	
-
-
 	// diagonal check from the bottom left to the top right: (diagonalBL2TR)
 	{
 		int elementCounting = 0; // in some cases diagonal less than vector to win in this case we do not check it
@@ -206,24 +243,52 @@ bool playerVictoryCheck(gameSymbols** array, int Rows, int Colomns, int x_intern
 			elementCounting++;
 		}
 		std::cout << std::endl;
-		std::cout << elementCounting << std::endl;
+		//std::cout << elementCounting << std::endl;
 
+		// записать в массив:
 		if (elementCounting >= vectorSize) {
-			// записать в массив
 			for (int k = 0; k < vectorSize; k++) {
 
+
+				int x_check = x_internal; int y_check = y_internal;
+
+				while ((x_check < Rows) && (y_check != -1)) {
+					checkingArray[k] = array[x_check][y_check];
+					//std::cout << "diagonal \ = " << printSymbol(checkingArray[k]);
+
+					x_check++;
+					y_check--;
+					k++;
+				}
+
+				// reset operators:
+				x_check = x_internal - 1; y_check = y_internal + 1;
+
+			
+				while ((x_check != -1) && (y_check < Colomns)) {
+					
+
+					checkingArray[k] = array[x_check][y_check];
+					//std::cout << "diagonal \ = " << printSymbol(checkingArray[k]);
+
+					x_check--;
+					y_check++;
+					k++;
+				}
+				std::cout << std::endl;
 			}
 		}
 
 		// return bool function (checkingArray);
+		return vectorCheck(checkingArray, vectorSize);
 	};
 
-
+	// emptying space:
+	delete[] checkingArray;
+	checkingArray = nullptr;
 
 	return false;
 }
-
-
 
 
 void deleteGameField(gameSymbols** data, int Rows)
@@ -267,11 +332,15 @@ int main() {
 		
 		if (orderStep >= (vectorSize * 2 - 1)) { // <<--- there is no reason to check it before
 			victoryFlg = playerVictoryCheck(gameField, fieldSize, fieldSize, x, y, vectorSize);
+			//std::cout << "HERE" << std::endl;
 		}
 	
+		//std::cout << "& HERE" << std::endl;
 	}
 
 	// 3rd Block - empty space after the working process:
+
+	
 	deleteGameField(gameField, fieldSize); 
 	gameField = nullptr;
 	return 0; 
@@ -285,3 +354,5 @@ int main() {
 // https://coderoad.ru/31230610/C-%D0%B8%D0%BD%D0%B8%D1%86%D0%B8%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F-%D0%BC%D0%B0%D1%81%D1%81%D0%B8%D0%B2%D0%B0-%D0%BF%D0%BE-%D1%81%D1%81%D1%8B%D0%BB%D0%BA%D0%B5-%D1%87%D0%B5%D1%80%D0%B5%D0%B7-%D1%84%D1%83%D0%BD%D0%BA%D1%86%D0%B8%D1%8E
 // 3. проверка на целочисленный тип данных:
 // https://coderoad.ru/784563/C-%D0%BF%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%B8%D1%82%D1%8C-%D1%8F%D0%B2%D0%BB%D1%8F%D0%B5%D1%82%D1%81%D1%8F-%D0%BB%D0%B8-%D1%87%D0%B8%D1%81%D0%BB%D0%BE-%D0%B8%D0%BD%D1%82-%D1%84%D0%BB%D0%BE%D0%B0%D1%82
+
+	
