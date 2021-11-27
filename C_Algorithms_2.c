@@ -46,18 +46,35 @@ void numsys_ten_two(int num_dec) {
     printf("%5d", num_dec % 2);
 }
 
+// a in power of b: recursive
+int power_a_in_b(int a, int b) {
+    if (b != 0) {
+        return (a * power_a_in_b(a, b - 1));
+    }
+}
 
+// a in power of b: recursive
+int power_a_in_b_odd_even(int a, int b) {
+    if (( (b % 2) == 0) && (b != 0))
+    {
+        return ((a * a) *power_a_in_b_odd_even(a, b / 2));
+    }
+
+    else {
+        return (a *power_a_in_b_odd_even(a, b - 1));
+    }
+}
 
 
 int main()
-{
+{   
+    int number;
     int a;
     int b;
-    printf("Enter the number a: ");
-    scanf("%d", &a);
-    printf("Enter the number b: ");
-    scanf("%d", &b);
-
+    int answer;
+    printf("Enter the number: ");
+    scanf("%d", &number);
+   
     // Task 0:
     /*
     /b = factorial(a);
@@ -70,12 +87,22 @@ int main()
    
 
     // Lesson 4. Problem 1: use recursion to change numeric system from 10 to 2:
-    numsys_ten_two(a);
+    numsys_ten_two(number);
+    printf("\n");
 
-    // Lesson 4. Problem 2: use recursion to a ^ b 
+    // Lesson 4.a) Problem 2: use recursion to a ^ b 
+    printf("Enter the number a: ");
+    scanf("%d", &a);
+    printf("Enter the number b: ");
+    scanf("%d", &b);
 
+    answer = power_a_in_b(a, b);
+    printf("%d", answer);
+    printf("\n");
 
-
-
-
+    // Lesson 4.a) Problem 2: use recursion to a ^ b 
+    answer = power_a_in_b_odd_even(a, b);
+    printf("%d", answer);
 }
+
+
