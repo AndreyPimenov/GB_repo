@@ -4,6 +4,32 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// for checkmate problem:
+#define HEIGHT 8
+#define WIDTH 8 
+#define KING 1
+
+int board[HEIGHT][WIDTH]; 
+
+void annull() {
+    for (int i = 0; i < HEIGHT; ++i) {
+        for (int j = 0; j < WIDTH; ++j ) {
+            board[i][j] = 0;
+        }    
+    }
+}
+
+void printBoard() {
+    for (int i = 0; i < HEIGHT; ++i) {
+        for (int j = 0; j < WIDTH; ++j) {
+            printf("%3d", " ", board[i][j]);
+        }
+        printf("\n");
+    }
+
+}
+
+
 // recursion exp 1: factorial
 int factorial(int n) {
     if (n == 0) {
@@ -26,7 +52,7 @@ void rec(int a) {
 void numsys_ten_to_two_iterative(int num_dec) {
     char num_bin[] = "";
     while (num_dec != 0) {
-        if ((num_dec  % 2) == 0) {
+        if ((num_dec % 2) == 0) {
             num_dec = num_dec / 2;
             printf("%d", 0);
         }
@@ -39,7 +65,7 @@ void numsys_ten_to_two_iterative(int num_dec) {
 
 // transform numeric system from 10 to 2: recursive
 void numsys_ten_two(int num_dec) {
-    
+
     if (num_dec > 1) {
         numsys_ten_two(num_dec / 2);
     }
@@ -55,26 +81,32 @@ int power_a_in_b(int a, int b) {
 
 // a in power of b: recursive
 int power_a_in_b_odd_even(int a, int b) {
-    if (( (b % 2) == 0) && (b != 0))
-    {
-        return ((a * a) *power_a_in_b_odd_even(a, b / 2));
-    }
+    if (b != 0) {
+        if ( (b % 2) == 0)
+        {
+            return power_a_in_b_odd_even(a*a, b/2);
+        }
 
-    else {
-        return (a *power_a_in_b_odd_even(a, b - 1));
+        else {
+            return (a * power_a_in_b_odd_even(a, b - 1));
+        }
     }
+    else {
+        return 1;
+    }
+     
 }
 
 
 int main()
-{   
+{
     int number;
     int a;
     int b;
     int answer;
     printf("Enter the number: ");
     scanf("%d", &number);
-   
+
     // Task 0:
     /*
     /b = factorial(a);
@@ -84,7 +116,7 @@ int main()
 
     //rec(a);
     */
-   
+
 
     // Lesson 4. Problem 1: use recursion to change numeric system from 10 to 2:
     numsys_ten_two(number);
@@ -104,5 +136,4 @@ int main()
     answer = power_a_in_b_odd_even(a, b);
     printf("%d", answer);
 }
-
 
