@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// for checkmate problem:
+// _____________________PROBLEM N3 (my attempt):
 #define HEIGHT 8
 #define WIDTH 8 
 #define KING 1
@@ -40,7 +40,6 @@ void put_obstacles(int num_obst) {
     }
 }
 
-
 // recursion exp 1: factorial
 int factorial(int n) {
     if (n == 0) {
@@ -58,6 +57,12 @@ void rec(int a) {
         rec(a - 1);
     // printf("%5d", a); // выведет от меньшего к большему
 }
+
+
+
+
+
+// _____________________PROBLEM N1:
 
 // transform numeric system from 10 to 2: iterative
 void numsys_ten_to_two_iterative(int num_dec) {
@@ -83,14 +88,16 @@ void numsys_ten_two(int num_dec) {
     printf("%5d", num_dec % 2);
 }
 
-// a in power of b: recursive
+// _____________________PROBLEM N2:
+
+// a in power of b: recursive (classic)
 int power_a_in_b(int a, int b) {
     if (b != 0) {
         return (a * power_a_in_b(a, b - 1));
     }
 }
 
-// a in power of b: recursive
+// a in power of b: recursive (faster)
 int power_a_in_b_odd_even(int a, int b) {
     if (b != 0) {
         if ( (b % 2) == 0)
@@ -128,7 +135,6 @@ int main()
     //rec(a);
     */
 
-
     // Lesson 4. Problem 1: use recursion to change numeric system from 10 to 2:
     numsys_ten_two(number);
     printf("\n");
@@ -149,6 +155,8 @@ int main()
     printf("\n");
 
     // Lesson 4 Problem 3:
+
+  
     print_board();
 
     printf("Enter the number of obstacles on the board");
@@ -156,9 +164,7 @@ int main()
 
     put_obstacles(num_obstcl);
     print_board();
+ 
+
 
 }
-
-
-
-
