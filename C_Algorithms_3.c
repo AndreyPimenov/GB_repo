@@ -1,4 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS // для возможности использования scanf
+// Попробуй решать через разумного короля (это как искать путь из лабиринта)
 
 #include <iostream>
 #include <stdio.h>
@@ -276,9 +277,4 @@ int main()
 
     // Theory - https://informatics.msk.ru/mod/book/view.php?id=266&chapterid=57 
     // Exapmle from the teacher - King from the upper left cell to the cell B
-
 }
-
-
-
-
