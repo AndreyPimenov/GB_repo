@@ -1,3 +1,4 @@
+
 #define _CRT_SECURE_NO_WARNINGS // для возможности использования scanf
 
 #include <stdio.h>
@@ -29,7 +30,7 @@ void fillArray_int(int** array, const int row, const int col) {
 
 	for (int i = 0; i < row; ++i) {
 		for (int j = 0; j < col; ++j) {
-			*((*(array + i)) + j) = random(1,50); //((i + r) * (j + 1))/10;
+			*((*(array + i)) + j) = random(1, 50); //((i + r) * (j + 1))/10;
 		}
 	}
 }
@@ -70,17 +71,17 @@ int** arr; // for compiling in MVS, it needed to be named in advanced
 void bubble2dSort(int** array, const int row, const int col) {
 	// It is possible to change 2D Array in 1D Array and sort it and create new 2D array (for static array) 
 	// Another way:
-	int temp =0; 
+	int temp = 0;
 	bool flag = false; //equal true if sorting is done
 
-	do{
+	do {
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
 
 				// Bubble sorting in each row:
 				for (int i = 0; i < row; i++) {
 					for (int j = 0; j < col - 1; j++) {
-   						if (array[i][j] > array[i][j + 1]) {
+						if (array[i][j] > array[i][j + 1]) {
 							swap(&array[i][j + 1], &array[i][j]);
 						}
 					}
@@ -88,7 +89,7 @@ void bubble2dSort(int** array, const int row, const int col) {
 
 				// Checking the boarder elements - last of the previous row and the first of next row
 				for (int i = 0; i < row; i++) {
-					if ((i != row - 1) && (array[i][col-1] > array[i + 1][0])) {
+					if ((i != row - 1) && (array[i][col - 1] > array[i + 1][0])) {
 						swap(&array[i][col - 1], &array[i + 1][0]);
 						flag = false;
 					}
@@ -97,7 +98,7 @@ void bubble2dSort(int** array, const int row, const int col) {
 					}
 				}
 
-				
+
 			}
 		}
 	} while (!flag);
@@ -125,10 +126,38 @@ int main()
 	{
 		const int n = 7; // number of elements in initial string
 
+		int InitString[n] = { 1, 5, 3, 1, 5, 3, 8 };
+		int P[n] = {0,0,0,0,0,0,0};
+		//printf("Enter 7 numbers: \n");
+		int i = 1;
 
-		int InitString[n];
-		//InitString = { 1; 2; 3; 4; 5; 6; 7 };
-		printf("Enter 7 numbers: \n");
+		for (int j = 0; j < n; j++) {
+
+			if (InitString[i] == InitString[j]) {
+				P[i] = j + 1; i++; //j++;
+				//printf("i = %d ", i, " ");
+				//printf("j = %d ", j, " ");
+				//printf("InitString[i] = %d", InitString[i], " ");
+				//printf("InitString[j] = %d", InitString[j], " ");
+				//printf("P[i] = %d", P[i], "\n");
+
+			}
+			else if (j == 0) {
+				P[i] = 0; i++; j++;
+		    }
+
+			else { 
+				j = P[j - 1];
+			}
+			
+		}
+
+		
+		for (int i = 0; i < n; i++) {
+			printf("InitString[j] = %d", InitString[i], " ");
+			printf("P[i] = %d", P[i], "\n");
+		}
+		
 
 		/*
 		for (int i = 0; i < n; i++) {
@@ -140,8 +169,9 @@ int main()
 		}
 		*/
 
-		
+
+
 	}
-	
+
 	return 0;
 }
