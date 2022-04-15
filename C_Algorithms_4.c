@@ -168,10 +168,27 @@ int main()
 			printf("%d ", InitString[i]);
 		}
 		*/
-
-
-
 	}
 
 	return 0;
 }
+
+---------------------
+
+	//for (int j = 0; j < n; j++) {
+        while(j != (n-1) ){
+			if (InitString[i] == InitString[j]) {
+				P[i] = j + 1; i++; j++;
+			}
+			else {
+				if (j == 0) {
+					P[i] = 0; i++; //j++;
+				}
+				else {
+					j = P[j - 1]; //j++;
+				}
+			}
+		}
+	
+	
+
