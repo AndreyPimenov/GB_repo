@@ -1,4 +1,3 @@
-
 #define _CRT_SECURE_NO_WARNINGS // для возможности использования scanf
 
 #include <stdio.h>
@@ -7,7 +6,6 @@
 
 #include <time.h>
 int random(int min, int max) {
-
 	int number = min + rand() % (max - min);
 	return number;
 }
@@ -27,10 +25,9 @@ int** initArray(int** array, const int row, const int col) {
 }
 
 void fillArray_int(int** array, const int row, const int col) {
-
 	for (int i = 0; i < row; ++i) {
 		for (int j = 0; j < col; ++j) {
-			*((*(array + i)) + j) = random(1, 50); //((i + r) * (j + 1))/10;
+			*((*(array + i)) + j) = random(1, 50); 
 		}
 	}
 }
@@ -51,7 +48,6 @@ int** arr; // for compiling in MVS, it needed to be named in advanced
 /*
 #1 Реализовать пузырьковую сортировку двумерного массива
 
-
 #2
 Описать подробную блок-схему алгоритма Трабба-Прадо-Кнута
 1 - запросить у пользователя 11 чисел и записать их в последовательность П
@@ -66,8 +62,7 @@ int** arr; // for compiling in MVS, it needed to be named in advanced
 соответствующие сортировке и алгоритму Трабба-Прадо-Кнута, и с изображением в любом популярном формате (jpg, png, gif)
 */
 
-// Bubble_Sorting (my 1st variant):
-
+// Bubble_Sorting:
 void bubble2dSort(int** array, const int row, const int col) {
 	// It is possible to change 2D Array in 1D Array and sort it and create new 2D array (for static array) 
 	// Another way:
@@ -124,42 +119,32 @@ int main()
 
 	// The best explanation of algorithm: https://youtu.be/7g-WEBj3igk 
 	{
-		const int n = 7; // number of elements in initial string
-
-		int InitString[n] = { 1, 5, 3, 1, 5, 3, 8 };
-		int P[n] = {0,0,0,0,0,0,0};
+		const int n = 9; // number of elements in initial string
+		int InitString[n] = { 1,2,2,1,1,2,2,1,2 };//{ 1, 5, 3, 1, 5, 3, 8 };
+		int P[n] = {};
 		//printf("Enter 7 numbers: \n");
-		int i = 1;
+		int i = 1; int j = 0; P[0] = 0;
 
-		for (int j = 0; j < n; j++) {
-
+        while(i < n ){
 			if (InitString[i] == InitString[j]) {
-				P[i] = j + 1; i++; //j++;
-				//printf("i = %d ", i, " ");
-				//printf("j = %d ", j, " ");
-				//printf("InitString[i] = %d", InitString[i], " ");
-				//printf("InitString[j] = %d", InitString[j], " ");
-				//printf("P[i] = %d", P[i], "\n");
-
+				P[i] = j + 1; i++; j++;
 			}
-			else if (j == 0) {
-				P[i] = 0; i++; j++;
-		    }
-
-			else { 
-				j = P[j - 1];
+			else {
+				if (j == 0) {
+					P[i] = 0; i++; 
+				}
+				else {
+					j = P[j - 1]; 
+				}
 			}
-			
 		}
 
-		
 		for (int i = 0; i < n; i++) {
-			printf("InitString[j] = %d", InitString[i], " ");
-			printf("P[i] = %d", P[i], "\n");
+			printf("%d", P[i]);
 		}
-		
 
 		/*
+		// Manual entering:
 		for (int i = 0; i < n; i++) {
 			scanf("%d", &InitString[i]);
 		}
@@ -169,26 +154,5 @@ int main()
 		}
 		*/
 	}
-
 	return 0;
 }
-
----------------------
-
-	//for (int j = 0; j < n; j++) {
-        while(j != (n-1) ){
-			if (InitString[i] == InitString[j]) {
-				P[i] = j + 1; i++; j++;
-			}
-			else {
-				if (j == 0) {
-					P[i] = 0; i++; //j++;
-				}
-				else {
-					j = P[j - 1]; //j++;
-				}
-			}
-		}
-	
-	
-
