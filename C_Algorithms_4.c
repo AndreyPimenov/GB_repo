@@ -48,16 +48,8 @@ int** arr; // for compiling in MVS, it needed to be named in advanced
 
 // Home Task:
 /*
-#1
-Реализовать пузырьковую сортировку двумерного массива
-например, массив
-1,9,2
-5,7,6
-4,3,8
-должен на выходе стать
-1,2,3
-4,5,6
-7,8,9
+#1 Реализовать пузырьковую сортировку двумерного массива
+
 
 #2
 Описать подробную блок-схему алгоритма Трабба-Прадо-Кнута
@@ -75,7 +67,6 @@ int** arr; // for compiling in MVS, it needed to be named in advanced
 
 // Bubble_Sorting (my 1st variant):
 
-
 void bubble2dSort(int** array, const int row, const int col) {
 	// It is possible to change 2D Array in 1D Array and sort it and create new 2D array (for static array) 
 	// Another way:
@@ -89,12 +80,9 @@ void bubble2dSort(int** array, const int row, const int col) {
 				// Bubble sorting in each row:
 				for (int i = 0; i < row; i++) {
 					for (int j = 0; j < col - 1; j++) {
-
    						if (array[i][j] > array[i][j + 1]) {
 							swap(&array[i][j + 1], &array[i][j]);
 						}
-
-						
 					}
 				}
 
@@ -108,18 +96,18 @@ void bubble2dSort(int** array, const int row, const int col) {
 						flag = true;
 					}
 				}
+
 				
 			}
 		}
-
 	} while (!flag);
 
 }
 
 
-
 int main()
 {
+	// Sorting Problem:
 	srand(time(NULL));   // Change base for random number generator
 	const int row = 5;
 	const int col = 9;
@@ -133,6 +121,27 @@ int main()
 	bubble2dSort(arr, row, col);
 	printArray_int(arr, row, col);
 
+	// The best explanation of algorithm: https://youtu.be/7g-WEBj3igk 
+	{
+		const int n = 7; // number of elements in initial string
+
+
+		int InitString[n];
+		//InitString = { 1; 2; 3; 4; 5; 6; 7 };
+		printf("Enter 7 numbers: \n");
+
+		/*
+		for (int i = 0; i < n; i++) {
+			scanf("%d", &InitString[i]);
+		}
+		printf("This the initial string: \n");
+		for (int i = 0; i < n; i++) {
+			printf("%d ", InitString[i]);
+		}
+		*/
+
+		
+	}
+	
 	return 0;
 }
-
