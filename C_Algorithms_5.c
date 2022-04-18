@@ -243,10 +243,6 @@ void improvedSorting(int* arr, int first, int last) {
 	// Recursion 
 	if (i < last) { quickSortHoare(arr, i, last); };
 	if (first < j) { quickSortHoare(arr, first, j); };
-
-
-
-
 }
 
 /*
@@ -284,25 +280,50 @@ void bucketSorting(int* arr, int len) {
 */
 
 void specialBucketSorter(int* arr, int first, int last){
-// Few comments before starting:
-// 1) Do not create new array
-// 2) Распределяет исходные данные по корзинам, основываясь на цифре числа.
-// 
-
 // Getting information about intial array: it's min, max, quantity of buckets:
 	int min = arr[0]; int inx_min = 0;
 	int max = arr[0]; int inx_max = 0; 
+	int counter = 0; // number eleemtns for sorting;
+	int bucketsNum = 1; // number of buckets
 	int temp = 0;
 
-	for (int i = 0; i < last; ++i) {
+	// step 1. Research of the initial array: 
+	for (int i = 0; i <= last; ++i) {
 		if (arr[i] <= min) { min = arr[i]; inx_min = i; }; // finding minimum
 		if (arr[i] >= max) { max = arr[i]; inx_max = i; }; // finding maximum
-}
-	printf("min: \n"); printf("[%4d]", min);
-	printf("max: \n"); printf("[%4d]", max);
+		if (arr[i] % 2 == 0) { counter++; }; // finding number of elements
+    }
+	bucketsNum = sqrt(counter); // finding the number of the buckets; 
+
+	printf("min: [%4d]", min); printf(" \n");
+	printf("max: [%4d]", max); printf(" \n");
+	printf("counter: [%4d]", counter); printf(" \n");
+	printf("buckets: [%4d]", bucketsNum); printf(" \n");
+	
+	// step 2. create 1D array of boxes, each boxe is 2D array: initial indexes and actual elements for sorting;  
+	// this is the dynamic array: https://ru.wikipedia.org/wiki/%D0%94%D0%B8%D0%BD%D0%B0%D0%BC%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D0%BC%D0%B0%D1%81%D1%81%D0%B8%D0%B2
+	
+	int** new_array = (int**)calloc(sizeof(2), counter);  // Создание массива из counter элементов типа int + будем хранить индексы из начального массива
+	int j = 0;
+
+	/* NB: Хотел сделать так:
+	   inx i | inx i | ... | inx i 
+	   arr[i]| arr[i]| ... | arr[i]
+	   Но выдает ошибку на 320 и 321 строках. 
+	*/
+
+	for (int i = 0; i <= last; ++i) {
+		if (arr[i] % 2 == 0) {
+			new_array[0][j] = i;
+			new_array[1][j] = arr[i];
+			j++;
+		}
+	}
+
+	printf("new array: \n");
+	print2DArray_int(new_array, 2, counter);
 }
  
-
 int main()
 {
 	srand(time(NULL));   // Change base for random number generator
