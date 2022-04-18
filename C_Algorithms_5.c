@@ -198,12 +198,25 @@ void thickSplit(int* arr, int l, int r){
 
 }
 
-void improvedSorting(int* arr, int first, int last ){
-// Суть метода в том, чтобы выбрать опорный элемент 
-// наиболее близкий к медианному значению. далее классика:
+// Home work:
+/*
+1) Описать в коде улучшенный алгоритм быстрой сортировки.
+
+2) Сортировать в массиве целых положительных чисел только чётные числа, 
+нечётные оставив на своих местах при помощи алгоритма блочной сортировки, 
+то есть массив вида [0 2 8 3 4 6 5 9 8 2 7 3] превратить в [0 2 2 3 4 4 5 9 8 8 7 3]
+
+Результатом работы должен стать один файл с кодом на языке С, 
+содержащий функцию main и функции, необходимые для реализации сортировок
+*/
+
+
+void improvedSorting(int* arr, int first, int last) {
+	// Суть метода в том, чтобы выбрать опорный элемент 
+	// наиболее близкий к медианному значению. далее классика:
 	int i = first;
 	int j = last;
-	int x; 
+	int x;
 	// Choosing the support element
 	int x1 = arr[(first + last) / 2]; // middle index
 	int x2 = arr[(((first + last) / 2) + last) / 2]; // b/n middle and last index
@@ -212,7 +225,7 @@ void improvedSorting(int* arr, int first, int last ){
 	int delta = (x1 + x2 + x0) / 3;
 	if ((abs(x1 - delta) <= abs(x0 - delta)) && (abs(x1 - delta) <= abs(x2 - delta))) { x = x1; }
 	else if ((abs(x0 - delta) <= abs(x1 - delta)) && (abs(x0 - delta) <= abs(x2 - delta))) { x = x0; }
-	else {x = x2;}
+	else { x = x2; }
 
 	// Swapping elements around support one to make group less than support and big then support:
 	do {
@@ -235,22 +248,47 @@ void improvedSorting(int* arr, int first, int last ){
 
 
 }
-// Home work:
-/*
-1) Описать в коде улучшенный алгоритм быстрой сортировки.
-2) Сортировать в массиве целых положительных чисел только чётные числа, 
-нечётные оставив на своих местах при помощи алгоритма блочной сортировки, 
-то есть массив вида [0 2 8 3 4 6 5 9 8 2 7 3] превратить в [0 2 2 3 4 4 5 9 8 8 7 3]
-Результатом работы должен стать один файл с кодом на языке С, 
-содержащий функцию main и функции, необходимые для реализации сортировок
-*/
+
+void bucketSorting(int* arr, int len) {
+	const int bucket_len = len; // max elements in each buckets
+	const int b = 10; // кол-во корзин
+
+	int buckets[b][bucket_len];
+	//int buckets[b][bucket_len];
+
+	for (int i = 0; i < b; ++i) {
+		buckets[i][bucket_len] = 0; 
+	}
+
+	for (int digit = 1; digit < 100000000000; digit*=10){
+		for (int i = 0; i < bucket_len; ++i) {
+			int d = (arr[i] / digit) % b;
+
+			/*int counter = buckets[d][bucket_len];
+			buckets[d][counter] = arr[i];
+			counter++;
+			buckets[d][bucket_len] = counter;*/
+
+			buckets[d][buckets[d][bucket_len]++] = arr[i];
+		}
+		int idx = 0;
+		for (int i = 0; i < b; ++i) {
+			for (int j = 0; j < buckets[i][bucket_len]; ++j) {
+				arr[idx++] = buckets[i][j];
+			}
+			buckets[i][bucket_len] = 0;
+		}
+
+	}
+	// Распределяет исходные данные по корзинам, основываясь на цифре числа. 
+}
+
 
 int main()
 {
 	srand(time(NULL));   // Change base for random number generator
 	const int sizeN = 5; // row
 	const int sizeM = 5; // col
-
 	
 	printf("Initial array: \n");
 	arr1D = init1DArray(arr1D, sizeN);
@@ -265,20 +303,11 @@ int main()
 
 	// thickSplit(arr1D, 0, sizeN - 1); // <-- 1c ThicSplit
 
-	improvedSorting(arr1D, 0, sizeN - 1);
+	//improvedSorting(arr1D, 0, sizeN - 1); // <-- PROBLEM N1; Check it !!!
+
+	//bucketSorting();
 
 	print1DArray_int(arr1D, sizeN);
 
-	
-
-	// Problem - 2:
-	{
-
-
-
-	}
-
-
 	return 0;
 }
-
