@@ -1,9 +1,13 @@
 #define _CRT_SECURE_NO_WARNINGS // для возможности использования scanf
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
+
+#define true 1 == 1
+#define false 1 != 1
+typedef int boolean;
+
 
 // Class work:
 // 1 - односвязные
@@ -97,11 +101,6 @@ void printList(List* lst) {
 	printf("Size: %d \n", lst->size);
 }
 
-
-
-
-
-
 // Home work:
 // 1 - Написать программу, которая определяет, является ли введенная скобочная последовательность правильной.
 // Примеры правильных скобочных выражений : (), ([])(), {}(), ([{}]), 
@@ -109,6 +108,92 @@ void printList(List* lst) {
 // Например: (2 + (2 * 2)) или[2 / {5 * (4 + 7)}]
 // 2 - Создать функцию, копирующую односвязный список(без удаления первого списка).
 // 3 - Реализуйте алгоритм, который определяет, отсортирован ли связный список.
+Node* removeLastNode(List* lst) {
+	Node* currentOne = lst->head;
+	Node* previousOne = NULL;
+	if (currentOne == NULL) {
+		return NULL;
+	}
+
+	while (currentOne->next != NULL) {
+		previousOne = currentOne;
+		currentOne = currentOne->next;
+	}
+
+	if (currentOne == lst->head) {
+		lst->head = currentOne->next;
+		lst->size--;
+		return currentOne;
+	}
+
+	previousOne->next = currentOne->next;
+	lst->size--;
+	return currentOne;
+}
+
+int braketsCheck(char* expression) {
+	const int TYPES = 3;
+	char brackets[][2] = {
+		{'(',')'},
+		{'[',']'},
+		{'{','}'}
+	};
+
+	List* st = (List*)malloc(sizeof(List));
+	init(st);
+
+	int countIndx = 0;
+	while (*expression != '\n') {
+		for (int i = 0; i < TYPES; ++i) {
+			if (*expression == brackets[i][0]) {
+				insertList(st, i); // pushOneLinkStack(st, i);
+			}
+		}
+		for (int i = 0; i < TYPES; ++i) {
+			if (*expression == brackets[i][1]) {
+				if (st->size == 0) {
+					return countIndx; // )(
+				}
+				if (i == st->head->data){
+					removeLastNode(st);	
+				}
+				else {
+					return countIndx;
+				}
+			}
+			expression++;
+			countIndx++;
+		}
+		if (st->size != 0) {
+			return 0;
+		}
+		return -1;
+	}
+}
+
+void copyList(List* from, List* to){
+	int size = from->size;
+	Node* currentOne = from->head;
+	while (size != 0 ) {
+		for (int i = 0; i < size - 1; ++i) {
+			currentOne = currentOne->next;
+		}
+		insertList(to, currentOne->data);
+		size--;
+		currentOne = from->head;
+	}
+}
+
+boolean isSorted(List* lst) {
+	Node* currentOne = lst->head;
+	while (currentOne->next != NULL) {
+		if (currentOne->data > currentOne->data)
+			return false;
+		currentOne = currentOne->next;
+	}
+}
+
+char* expression;
 
 int main(const int argc, const char** argv) {
 	// Class work:
@@ -128,5 +213,32 @@ int main(const int argc, const char** argv) {
 
 	printNode(removeNode(lst, 1)); printf("<- removed mode\n");
 	printList(lst);
+
+	// Home work:
+	/*
+	braketsCheck( expression: "()");
+	printf("(): %d \n", braketsCheck(expression: "()"));
+	printf("(: %d \n", braketsCheck(expression: "("));
+	printf("{}(]: %d \n", braketsCheck(expression: "{}(]"));
+	printf("{ ( [ { } [] ] ( }: %d \n", braketsCheck(expression: "{ ( [ { } [] ] ( }"));
+	printf("[2/{5*(4+7)}]: %d \n", braketsCheck(expression: "[2/{5*(4+7)}]"));
+	printf("[2/{5*[4+7)}]: %d \n", braketsCheck(expression: "[2/{5*[4+7)}]"));
+	*/
+
+	List* first = (List*)malloc(sizeof(List));
+	init(first);
+
+	List* second = (List*)malloc(sizeof(List));
+	init(second);
+
+	for (int i = 9; i > 1; --i) {
+		insertList(first, i);
+	}
+
+	printList(first);
+	copyList(first, second);
+	printList(second);
+	printf("%s \n", isSorted(first) ? "true" : "false");
+
 	return 0;
 }
