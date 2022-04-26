@@ -106,7 +106,7 @@ int head; // индекс головы очереди
 int tail; // индекс хвоста очередиъ
 int items; // текущее кол-во элементов в очереди
 
-void init(){
+void init() {
 	for (int i = 0; i < SZ; ++i) {
 		arr[i] = NULL;
 	}
@@ -126,8 +126,8 @@ void insert_qin(int priority, int data) {
 	if (items == 0) {
 		arr[tail++] = node;
 		items++;
-	} 
-	else if (items == SZ){
+	}
+	else if (items == SZ) {
 		printf("%s \n", "Queue is full");
 		return;
 	}
@@ -169,33 +169,26 @@ Node* remove_qin() {
 }
 
 void insert_qout(int priority, int data) {
-	// выделение памяти, назначение переменных:
+	// выделение памяти на ячейку узла внутри очереди, назначение переменных:
 	Node* node = (Node*)malloc(sizeof(Node));
-	node->data = data; // arr[i]->priority, 
-	node->priority = priority; // arr[i]->data
+	node->data = data;  
+	node->priority = priority; // arr[i] = node
 
-	
-	
+	// Если очередь пустая, то положим новый элемент в хвост очереди
+	// Увеличим индекс хвоста и кол-во элементов в очереди:
 	if (items == 0) {
 		arr[tail++] = node;
 		items++;
 	}
 	else if (items == SZ) {
 		printf("%s \n", "Queue is full");
-		return;
+		//return;
 	}
 	else {
-		for (int i = 0; i < tail; ++i) {
-			arr[i]->data = data;
-			arr[i]->priority = priority;
-			printf("Doesn't know \n");
-		}
-
-		
-		return;
+		arr[items] = node;
+		items++;
 	}
-	
-
+	tail++;
 }
 
 Node* remove_qout() {
@@ -212,7 +205,7 @@ void printQueue() {
 		else {
 			printf("[%d,%d]", arr[i]->priority, arr[i]->data);
 		}
-		
+
 	}
 	printf("] \n");
 }
@@ -220,10 +213,11 @@ void printQueue() {
 
 // очередь с приоритетом исключением:
 
- 
 
-int main(const int argc, const char **argv) {
 
+int main(const int argc, const char** argv) {
+
+	// Class work:
 	/*
 	push('a');
 	push('b');
@@ -235,7 +229,7 @@ int main(const int argc, const char **argv) {
 		printf("%c,", pop());
 	}
 	*/
-	
+
 	/*
 	int i = 0;
 	while (i < 5) {
@@ -245,18 +239,16 @@ int main(const int argc, const char **argv) {
 		enqueue('d');
 		enqueue('e');
 		enqueue('f');
-
 		while (items > 0) {
 			printf("%c,", dequeue());
 		}
 		printf("\n");
 		i++;
 	}
-	*/ 
-	
+	*/
 	// очередь с приоритетом включением:
-    /*
-    init();
+	/*
+	init();
 	insert_qin(1, 11);
 	insert_qin(5, 22);
 	insert_qin(3, 123);
@@ -271,12 +263,11 @@ int main(const int argc, const char **argv) {
 	for (int i = 0; i < 7; ++i) {
 		Node* n = remove_qin();
 		printf("priority = %d, data = %d \n", n->priority, n->data);
-
 	}
-
 	printQueue();
 	*/
 
+	// Home Work:
 	// очередь с приоритетом исключением:
 	init();
 	insert_qout(2, 12);
@@ -287,9 +278,14 @@ int main(const int argc, const char **argv) {
 	insert_qout(1, 15);
 	insert_qout(4, 22);
 	insert_qout(7, 12);
+	insert_qout(5, 32);
+	insert_qout(6, 42);
 	printQueue();
 
 
 	// перевод из десятичной в двоичную с ис-ем стека:
+	
+	
+	
 	return 0;
 }
