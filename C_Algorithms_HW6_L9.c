@@ -168,6 +168,8 @@ Node* remove_qin() {
 	}
 }
 
+// очередь с приоритетом исключением:
+
 void insert_qout(int priority, int data) {
 	// выделение памяти на ячейку узла внутри очереди, назначение переменных:
 	Node* node = (Node*)malloc(sizeof(Node));
@@ -182,7 +184,6 @@ void insert_qout(int priority, int data) {
 	}
 	else if (items == SZ) {
 		printf("%s \n", "Queue is full");
-		//return;
 	}
 	else {
 		arr[items] = node;
@@ -191,14 +192,41 @@ void insert_qout(int priority, int data) {
 	tail++;
 }
 
-Node* remove_qout() {
+Node* remove_qout() {	
+	int flag; // место удаления элемента
+	
+	// this function I realised with your support:
+	if (items == 0) {
+		printf("%s \n", "Queue is empty");
+		return NULL;
+	}
 
+	int max = arr[0]->priority;
+	int idx = 0;
 
+	for (int i = 1; i < items; ++i) {
+		if (arr[i]->priority > max) {
+			max = arr[i]->priority;
+			idx = i;
+		}
+	}
+
+	Node* tmp = arr[idx];
+
+	while (idx < items) {
+		arr[idx] = arr[idx + 1];
+		idx++;
+	}
+		
+		
+	items--;
+	tail--; 
+	return tmp;
 }
 
 void printQueue() {
-	printf("[ ");
-	for (int i = 0; i < SZ; ++i) {
+	printf("{ ");
+	for (int i = 0; i < items; ++i) {
 		if (arr[i] == NULL) {
 			printf("[*,*]");
 		}
@@ -207,13 +235,8 @@ void printQueue() {
 		}
 
 	}
-	printf("] \n");
+	printf("} \n");
 }
-
-
-// очередь с приоритетом исключением:
-
-
 
 int main(const int argc, const char** argv) {
 
@@ -282,8 +305,15 @@ int main(const int argc, const char** argv) {
 	insert_qout(6, 42);
 	printQueue();
 
+	remove_qout();
+	remove_qout();
+	printQueue();
+	
+
 
 	// перевод из десятичной в двоичную с ис-ем стека:
+	
+	
 	
 	
 	
