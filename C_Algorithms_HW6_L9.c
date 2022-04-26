@@ -1,3 +1,11 @@
+/*
+1) Описать очередь с приоритетным исключением
+2) Реализовать перевод из десятичной в двоичную систему счисления с использованием стека.
+
+Результатом работы должен стать один файл с кодом на языке С, содержащий функцию main, 
+а также функции, необходимые для работы приоритетной очереди и перевода систем счисления
+*/
+
 // Resources:
 // Queue - https://codechick.io/tutorials/dsa/dsa-priority-queue 
 // Queue C - https://youtu.be/aUKoTGnzLic 
@@ -31,9 +39,9 @@ int* arr1D;
 
 int cursor = -1;
 T Stack[SIZE];
-
 typedef int boolean;
 
+/*
 T Queue[SIZE];
 int first = 0;
 int end = -1;
@@ -67,6 +75,8 @@ T dequeue() {
 	}
 }
 
+*/
+
 boolean push(T data) {
 	// наличие свободного места в массиве:
 	if (cursor < SIZE) {
@@ -90,7 +100,7 @@ T pop() {
 	}
 }
 
-// очередь
+// очередь:
 // ключ - приоритет
 // значение  - непосредственно само значение ячейки
 
@@ -217,8 +227,7 @@ Node* remove_qout() {
 		arr[idx] = arr[idx + 1];
 		idx++;
 	}
-		
-		
+				
 	items--;
 	tail--; 
 	return tmp;
@@ -237,6 +246,22 @@ void printQueue() {
 	}
 	printf("} \n");
 }
+
+// перевод из десятичной в двоичную с ис-ем стека:
+// шаг 1 - задаем большой стек - DONE BEFORE
+// шаг 2 - пишем push() - запись в стек - DONE BEFORE
+// шаг 3 - пишем pop() - удаление из стека - DONE BEFORE
+// шаг 3 - делим число на два и записываем в стек остаток от деления, повторяем в цикле пока не пройдем все число
+
+void decToBin(int a) {
+	while (a >= 1) {
+		push(a % 2);
+		a /= 2;
+	}
+
+}
+
+
 
 int main(const int argc, const char** argv) {
 
@@ -309,13 +334,14 @@ int main(const int argc, const char** argv) {
 	remove_qout();
 	printQueue();
 	
-
-
 	// перевод из десятичной в двоичную с ис-ем стека:
 	
-	
-	
-	
+	printf("15 in dec, in bin it is ");
+	decToBin(15);
+	int count = cursor;
+	for (int i = 0; i <= count; ++i) {
+		printf("%d", pop());
+	}
 	
 	return 0;
 }
