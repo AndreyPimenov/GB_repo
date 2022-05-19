@@ -255,23 +255,30 @@ void postOrderTravers(TreeNode* root) {
 // это можно достичь размещая одинаковое число узлов слева и справа от корня
 // Вот формула: для N узлов
 // Левое дерево из N / 2 далее Корень далее для правого: (N / 2 - 1)
-
-//typedef struct Node {
-//	int key;
-//	struct Node* left;
-//	struct Node* right;
-//} BinTreeIntNode;
+FILE* file;
 
 TreeNode* balancedTree(int n) {
-	TreeNode* newNode;
+	TreeNode* newNode; // временный узел - будет использоваться для построения
 	int x;
-	int nL;
-	int nR;
+	int nL; // кол-во узлов слева
+	int nR; // кол-во узлов справа
+
+	if (n == 0) { 
+		return NULL;
+	} else {
+		fscanf(file, "%d", &x);
+		nL = n / 2;
+		nR = n - nL - 1;
+		newNode = (TreeNode*)malloc(sizeof(TreeNode));
+		newNode->key = x;
+		newNode->left = balancedTree(nL);
+		newNode-> right = balancedTree(nR);
+	}
+	return newNode; // возвращаем ссылку на корень идеальносбалансировнного дерева
 }
 
-
 int main(const int argc, const char** argv) {
-	TreeNode* tree = 0; 
+	TreeNode* tree = NULL; 
 	tree= treeInsert(tree, 10);
 
 	treeInsert(tree, 5);
@@ -286,6 +293,7 @@ int main(const int argc, const char** argv) {
 
 	printf("\n");
 	deleteNode(tree, 12);
+
 	printTree(tree);
 
 	printf("\n");
@@ -308,10 +316,25 @@ int main(const int argc, const char** argv) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
-ДЗ - 1
-Написать функцию проверяющую является ли переданное в неё бинарное дерево сбалансированным и написать программу, которая:
-создаст [50] деревьев по [10000] узлов и заполнит узлы случайными целочисленными значениями;
-рассчитает, какой процент из созданных деревьев является сбалансированными.
-Написать рекурсивную функцию бинарного поиска в дереве хранящемся в узлах, а не в массиве.
+
+1) Написать функцию проверяющую является ли переданное в неё бинарное дерево сбалансированным и написать программу, которая:
+создаст [50] деревьев по [10000] узлов и заполнит узлы случайными целочисленными значениями; рассчитает, какой процент
+из созданных деревьев является сбалансированными.
+
+2) Написать рекурсивную функцию бинарного поиска в дереве хранящемся в узлах, а не в массиве.
+
 */
