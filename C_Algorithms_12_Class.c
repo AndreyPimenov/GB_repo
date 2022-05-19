@@ -16,6 +16,30 @@ void swapInt(int* a, int* b) {
 	*b = t;
 }
 
+// for 1D arrays:
+int* init1DArray(int* array, const int sizeArr) {
+	array = (int*)calloc(sizeArr - 1, sizeof(int*));
+	//for (int i = 0; i < sizeArr; ++i) {
+	//	*array = calloc(sizeArr, sizeof(int*));
+	//}
+	return array;
+}
+
+void fill1DArray_int(int* array, const int sizeArr) {
+	for (int i = 0; i < sizeArr; ++i) {
+		array[i] = random(1, 100);
+	}
+}
+
+void print1DArray_int(int* array, const int sizeArr) {
+	for (int i = 0; i < sizeArr; ++i) {
+		printf("[%4d]", array[i]);
+	}
+	printf("\n");
+}
+
+//int** arr; // for compiling in MVS, it needed to be named in advanced
+
 #define true 1 == 1
 #define false 1 != 1
 
@@ -255,7 +279,7 @@ void postOrderTravers(TreeNode* root) {
 // это можно достичь размещая одинаковое число узлов слева и справа от корня
 // Вот формула: для N узлов
 // Левое дерево из N / 2 далее Корень далее для правого: (N / 2 - 1)
-FILE* file;
+FILE* file; 
 
 TreeNode* balancedTree(int n) {
 	TreeNode* newNode; // временный узел - будет использоваться для построения
@@ -277,7 +301,87 @@ TreeNode* balancedTree(int n) {
 	return newNode; // возвращаем ссылку на корень идеальносбалансировнного дерева
 }
 
-int main(const int argc, const char** argv) {
+// Деревья поиска
+// Дерево поиска модет исполтзоваться как словарь и как очередь с приоритетами
+// Основные операции выполняются за время пропорцилоанльное его высоте
+// Theta(log(N))
+
+// Бинарный поиск. Главное свойство бинарного дерева поиска:
+// Если дочерный ключ меньше или равен ключу родительского,
+// то дочерний узел должен располагаться в левом поддереве.
+// Если больше или равен, то в правом.
+
+// Можно вывести все ключи в пордяке возрастания, 
+// при использвоании алгоритма - симмитричного обхода
+
+// поиск по дереву:
+boolean binSearch(TreeNode* root, int value) {
+
+	if (root == NULL)
+		return false;
+	if (root->key == value) 
+		return true;
+
+	TreeNode* current = root;
+	while (current->key != value) {
+		if (value < current->key) 
+			current = current->left;
+		else 
+			current = current->right;
+		
+		if (current == NULL) 
+			return false;
+	}
+	return true;
+}
+
+// пирамидальная сортировка массива
+
+// построение пирамидального дерева:
+void buildTree(int* arr, int ind, int size) {
+	int maxIdx = ind;
+	int newElem = arr[ind];
+
+	// в цикле высчитываем индекс левого потомка
+	// проверяем, что он не за пределами массива
+	// и сравниваем потомка с новым элементом
+	// если потомок больше то запишем его индекс как максимальный
+	while (true) {
+		int child = ind * 2 + 1; // left child
+		if ((child < size) && (arr[child] > newElem)) {
+			maxIdx = child;
+		}
+		child = ind * 2 + 2; // right child
+		if ((child < size) && (arr[child] > arr[maxIdx])) {
+			maxIdx = child;
+		}
+		if (maxIdx == ind) {
+			break;
+		}
+		arr[ind] = arr[maxIdx];
+		arr[maxIdx] = newElem;
+		ind = maxIdx;
+	}
+}
+
+// сортировка методом того, что корень смещается на самую дальнюю позицию
+void heapSort(int* arr, int size) {
+	for (int i = size / 2 - 1; i >= 0; --i) {
+		buildTree(arr, i, size);
+	}
+
+	while (size > 1) {
+		--size;
+		int firstElem = arr[0];
+		arr[0] = arr[size];
+		arr[size] = firstElem;
+		buildTree(arr, 0, size);
+	}
+}
+
+int main(const int argc, const char** argv) {	
+	// 1st block:
+	{
 	TreeNode* tree = NULL; 
 	tree= treeInsert(tree, 10);
 
@@ -306,35 +410,69 @@ int main(const int argc, const char** argv) {
 	printf("\n");
 	postOrderTravers(tree); // обратный обход для полного удаления дерева
 
-	return 0;
-}
+	}
 
+	// 2nd block:
+	{
+		TreeNode* tree = NULL; // ссылка на дерево
+		file = fopen("Source.txt", "r");
 
+		if (file == NULL) {
+			printf("%s \n", "Cannot open");
+			return 1;
+		}
 
+		const int count = 20;
+		tree = balancedTree(count);
+		fclose(file);
+		printTree(tree);
+	}
 
+	// 3rd block:
+	{
+		TreeNode* tree = NULL;
+		tree = treeInsert(tree, 10);
 
+		treeInsert(tree, 5);
+		treeInsert(tree, 7);
+		treeInsert(tree, 3);
+		treeInsert(tree, 2);
+		treeInsert(tree, 1);
+		treeInsert(tree, 9);
+		treeInsert(tree, 12);
+		treeInsert(tree, 8);
 
+		printf("\n");
+		printTree(tree);
 
+		printf("\n");
+		printf("37 in tree = %s \n", binSearch(tree, 37) ? "true" : "false");
+		printf("5 in tree = %s \n", binSearch(tree, 5) ? "true" : "false");
+		printf("21 in tree = %s \n", binSearch(tree, 21) ? "true" : "false");
+		printf("12 in tree = %s \n", binSearch(tree, 12) ? "true" : "false");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+	}
+	
+	// 4th block - пирамидальная сортировка: 
+	// в ее основе лежит сортирующее бинарное дерево
+	{
+		const int SZ = 20;
+		int arr[SZ];
+		fill1DArray_int(arr, SZ);
+		print1DArray_int(arr, SZ);
+		heapSort(arr, SZ);
+		print1DArray_int(arr, SZ);
+	}
+	
+	// HOME WORK
 /*
-
 1) Написать функцию проверяющую является ли переданное в неё бинарное дерево сбалансированным и написать программу, которая:
 создаст [50] деревьев по [10000] узлов и заполнит узлы случайными целочисленными значениями; рассчитает, какой процент
 из созданных деревьев является сбалансированными.
 
 2) Написать рекурсивную функцию бинарного поиска в дереве хранящемся в узлах, а не в массиве.
-
 */
+
+
+	return 0;
+}
