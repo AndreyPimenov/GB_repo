@@ -207,6 +207,44 @@ boolean deleteNode(TreeNode* root, int key) {
 	return true;
 }
 
+// Рекурсивный обход двоичного дерева:
+// Обход дерева = поиск по дереву - вид обхода графа,
+// обуславливающего процесс посещения, проверки
+// или обновления каждого узла структуры дерева данных
+// ровно один раз. 
+// Такие обходы классифицируются по порядку в котором узлы посещаются
+// Т.о. обход дерева - это перебор его элементов
+// Существуюет три типа таких обходов:
+// Обход в глубину - вниз на каждом эл-те прежде чем к след. род-й ветке
+// прямой: корень - левый - правый.
+// центрированный: левый - корень - правый
+// обратный: левый - правый - корень
+
+void preOrderTravers(TreeNode* root) {
+	if (root) {
+		printf("%2d ", root->key);
+		preOrderTravers(root->left);
+		preOrderTravers(root->right);
+	}
+}
+
+void inOrderTravers(TreeNode* root) {
+	if (root) {
+		inOrderTravers(root->left);
+		printf("%2d", root->key);
+		inOrderTravers(root->right);
+	}
+}
+
+void postOrderTravers(TreeNode* root) {
+	if (root) {
+		preOrderTravers(root->left);
+		preOrderTravers(root->right);
+		printf("%2d ", root->key);
+	}
+}
+
+
 int main(const int argc, const char** argv) {
 	TreeNode* tree = 0; 
 	tree= treeInsert(tree, 10);
@@ -220,9 +258,35 @@ int main(const int argc, const char** argv) {
 	treeInsert(tree, 12);
 	treeInsert(tree, 8);
 	printTree(tree);
+
 	printf("\n");
 	deleteNode(tree, 12);
 	printTree(tree);
 
+	printf("\n");
+	preOrderTravers(tree); // прямой вид обхода для копирования дерева, чтобы сохранить структуру
+
+	printf("\n");
+	inOrderTravers(tree); // центрированный вид обхода для двоичного дерева поиска - в порядке возрастания значения узлов
+
+
+	printf("\n");
+	postOrderTravers(tree); // обратный обход для полного удаления дерева
+
 	return 0;
 }
+
+
+
+
+
+
+
+
+/*
+ДЗ - 1
+Написать функцию проверяющую является ли переданное в неё бинарное дерево сбалансированным и написать программу, которая:
+создаст [50] деревьев по [10000] узлов и заполнит узлы случайными целочисленными значениями;
+рассчитает, какой процент из созданных деревьев является сбалансированными.
+Написать рекурсивную функцию бинарного поиска в дереве хранящемся в узлах, а не в массиве.
+*/
