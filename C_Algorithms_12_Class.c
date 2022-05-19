@@ -22,7 +22,6 @@ void swapInt(int* a, int* b) {
 typedef int boolean;
 
 // Class Work - Trees
-
 typedef struct Node {
 	int key;
 	struct Node* left;
@@ -30,7 +29,6 @@ typedef struct Node {
 } TreeNode;
 
 //TreeNode tree;
-
 // вставка узла:
 // шаг 1. Создание нового узла и подготовка его к существованию внутри дерева
 // шаг 2. Поиск места для вставки
@@ -54,7 +52,7 @@ TreeNode* treeInsert(TreeNode* t, int data) {
 // для поиска места вставки нам понадобится два указателя
 // 1-й на текущий узел при поиске
 // 2-й на его родитель, чтобы правильно сообщить родительскому узлу
-//	о появлении наследника
+// о появлении наследника:
 	TreeNode* current = t;
 	TreeNode* parent = t;
 
@@ -209,22 +207,22 @@ boolean deleteNode(TreeNode* root, int key) {
 	return true;
 }
 
-
 int main(const int argc, const char** argv) {
-	TreeNode* tree;
+	TreeNode* tree = 0; 
 	tree= treeInsert(tree, 10);
 
 	treeInsert(tree, 5);
-	
-	/*treeInsert(tree, 7);
+	treeInsert(tree, 7);
 	treeInsert(tree, 3);
 	treeInsert(tree, 2);
 	treeInsert(tree, 1);
 	treeInsert(tree, 9);
 	treeInsert(tree, 12);
 	treeInsert(tree, 8);
-
-	printTree(tree);*/
+	printTree(tree);
+	printf("\n");
+	deleteNode(tree, 12);
+	printTree(tree);
 
 	return 0;
 }
